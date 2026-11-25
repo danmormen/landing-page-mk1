@@ -1,5 +1,5 @@
 /* =========================================================
-   Estudio Brío — interacciones y movimiento
+   K2 Studio — interacciones y movimiento
    ========================================================= */
 
 /* ---- Datos de contacto: cámbialos aquí y se actualizan en todo el sitio ---- */
@@ -9,6 +9,7 @@ const CONFIG = {
   email: 'hola@tuestudio.com',        // Correo de ejemplo
 };
 
+window.__k2Ready = true;
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- Enlaces de contacto ---------- */

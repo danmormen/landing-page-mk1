@@ -25,7 +25,11 @@ const active = Astro.url.pathname.replace(/\/$/, '') || '/';
       href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Figtree:wght@700&display=swap"
       rel="stylesheet"
     />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      // Activa las animaciones de entrada. Si main.js no carga en 3 s, se quitan para que el contenido se vea igual.
+      document.documentElement.classList.add('js');
+      setTimeout(function () { if (!window.__k2Ready) document.documentElement.classList.remove('js'); }, 3000);
+    </script>
   </head>
   <body>
     <a class="skip" href="#main">Saltar al contenido</a>

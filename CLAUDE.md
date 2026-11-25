@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Sitio del estudio hecho en **Astro 7** (estático). El idioma del sitio y del equipo es **español** (trato de "tú").
+Sitio de **K2 Studio** hecho en **Astro 7** (estático). El idioma del sitio y del equipo es **español** (trato de "tú").
 
 ## Antes de cambiar algo
 - `PRODUCT.md`: qué ofrece el negocio y qué **no** inventar (clientes, testimonios, cifras, precios, mantenimiento).

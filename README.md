@@ -1,6 +1,6 @@
-# Estudio Brío · Sitio web
+# K2 Studio · Sitio web
 
-Sitio del estudio (nombre temporal), que ofrece landing pages, sitios web y sistemas a la medida para negocios en crecimiento.
+Sitio de K2 Studio: páginas web y sistemas a la medida para negocios en crecimiento.
 Está hecho con [Astro](https://astro.build): genera HTML estático, rápido y fácil de publicar.
 
 ## Empezar
@@ -64,13 +64,15 @@ DESIGN.md               Reglas visuales y de animación
 4. Antes de pedir revisión, corre `npm run build` y `npm run check`, y revisa la página en celular.
 5. Otra persona revisa el PR. Cuando lo aprueba, se hace merge a `main`.
 
+Cada PR corre una **revisión automática (CI)** en GitHub Actions (`.github/workflows/ci.yml`) que ejecuta `npm run check` y `npm run build`. Si sale en rojo, revisa el detalle en la pestaña **Checks** del PR y corrígelo antes de unirlo.
+
 ### Con Claude Code
 
 El repositorio incluye skills de diseño en `.claude/skills/` (Impeccable y los skills de Emil Kowalski) y contexto en `CLAUDE.md`, `PRODUCT.md` y `DESIGN.md`. Si usas Claude Code en esta carpeta, se cargan automáticamente. Algunos comandos útiles: `/impeccable critique`, `/impeccable polish` y `/review-animations`.
 
 ## Pendientes
 
-- [ ] Nombre definitivo del estudio
+- [ ] Fotos del equipo para "Sobre nosotros"
 - [ ] Número de WhatsApp y correo reales
 - [ ] Conectar el formulario de contacto (Netlify Forms, Formspree…)
 - [ ] Revisar textos y artículos del blog

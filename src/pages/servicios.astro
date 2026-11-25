@@ -9,45 +9,45 @@ import { byKey } from '../data/projects';
 
 const services = [
   {
-    id: 'landing', key: 'landing', title: 'Landing pages', project: byKey('cafe'), cta: 'Quiero una landing page',
-    lead: 'Una sola página pensada para que quien llegue entienda qué ofreces y te contacte.',
-    items: ['Diseño a la medida de tu marca', 'Textos claros que explican tu oferta', 'Botón directo a WhatsApp y formulario de contacto', 'Se adapta a celular, tablet y computadora', 'Estructura básica para aparecer en buscadores'],
-    ideal: 'estás empezando a vender en línea, lanzas un producto o servicio, o hoy solo tienes redes sociales.',
-  },
-  {
-    id: 'sitios', key: 'sitio', title: 'Sitios web completos', project: byKey('ferre'), cta: 'Quiero un sitio web',
-    lead: 'Varias páginas para contar todo sobre tu negocio y que se vea establecido y confiable.',
-    items: ['Las secciones que tu negocio necesita: inicio, servicios, nosotros, contacto…', 'Catálogo o menú de productos', 'Blog o sección de noticias', 'Mapa, horarios y formas de contacto', 'Diseño consistente en todas las páginas'],
-    ideal: 'tienes varios servicios o productos que explicar, o quieres que tu negocio se vea más profesional.',
+    id: 'paginas', key: 'web', title: 'Páginas web para tu negocio', project: byKey('cafe'), cta: 'Quiero una página web',
+    lead: 'Tu negocio en internet, explicado de forma clara para que quien llegue entienda qué ofreces y te escriba.',
+    formats: [
+      { name: 'Una sola página', note: '(landing page)', text: 'Ideal para empezar: lo importante de tu negocio en una página, con un botón directo para contactarte.' },
+      { name: 'Sitio de varias páginas', note: '', text: 'Para contar más: servicios, catálogo o menú, equipo, ubicación y blog, cada uno en su lugar.' },
+    ],
+    items: ['Diseño a la medida de tu marca', 'Textos claros que explican tu oferta', 'Botón directo a WhatsApp y formulario de contacto', 'Se ve bien en celular, tablet y computadora', 'Preparada para buscadores como Google'],
+    ideal: 'hoy solo tienes redes sociales, estás lanzando algo nuevo o quieres que tu negocio se vea más profesional.',
   },
   {
     id: 'sistemas', key: 'sistema', title: 'Sistemas a la medida', project: byKey('inv'), cta: 'Quiero un sistema',
     lead: 'Herramientas hechas para cómo trabaja tu negocio: adiós al cuaderno, las hojas sueltas y los pedidos perdidos en el chat.',
+    formats: [],
     items: ['Pedidos y reservas', 'Citas y agenda', 'Inventario con avisos', 'Clientes y su historial', 'Reportes sencillos para tomar decisiones'],
     ideal: 'pierdes tiempo anotando a mano, se te olvidan pedidos o no sabes con certeza cuánto tienes en bodega.',
   },
 ];
 
 const guide = [
-  ['Quiero que me encuentren y me escriban', 'Landing page'],
-  ['Quiero mostrar todo lo que ofrece mi negocio', 'Sitio web completo'],
+  ['Quiero que me encuentren y me escriban', 'Una sola página'],
+  ['Quiero mostrar todo lo que ofrece mi negocio', 'Sitio de varias páginas'],
   ['Quiero dejar de anotar pedidos a mano', 'Sistema a la medida'],
-  ['Quiero conseguir más clientes y organizarme mejor', 'Sitio web + sistema'],
+  ['Quiero conseguir más clientes y organizarme mejor', 'Página web + sistema'],
 ];
 
 const faqs = [
   ['¿Cuánto cuesta?', 'Depende de lo que necesites. Después de una primera conversación te enviamos una cotización clara, con lo que incluye y lo que no, para que decidas con calma.'],
   ['¿Cuánto tiempo tarda?', 'Depende del tamaño del proyecto. Al cotizar te damos un calendario con las entregas, para que sepas qué esperar en cada etapa.'],
+  ['¿Qué es una landing page?', 'Es una página web de una sola sección, pensada para un objetivo: que quien la visite entienda qué ofreces y te contacte. Es la forma más rápida de tener tu negocio en internet.'],
   ['¿Necesito tener logo y textos?', 'No es necesario. Si ya los tienes, los usamos; si no, te ayudamos a definir lo básico para empezar.'],
-  ['¿Puedo empezar con una landing y crecer después?', 'Sí. Muchos negocios empiezan con una landing page y después suman más páginas o un sistema. Lo planeamos desde el inicio para que pueda crecer.'],
+  ['¿Puedo empezar con una página y crecer después?', 'Sí. Muchos negocios empiezan con una sola página y después suman más secciones o un sistema. Lo planeamos desde el inicio para que pueda crecer.'],
   ['¿Se verá bien en el celular?', 'Sí. Todo lo que hacemos se diseña para verse y funcionar bien en celular, tablet y computadora.'],
 ];
 ---
-<Base title={`Servicios · ${BRAND}`} description="Landing pages, sitios web completos y sistemas a la medida para negocios en crecimiento.">
+<Base title={`Servicios · ${BRAND}`} description="Páginas web y sistemas a la medida para negocios en crecimiento.">
   <section class="page-hero">
     <div class="wrap">
       <h1 class="display" data-hero="lead">Lo que hacemos por tu negocio</h1>
-      <p class="lead" data-hero="sub">Tres servicios que se pueden combinar. Empezamos por lo que más te ayuda hoy y dejamos todo listo para crecer después.</p>
+      <p class="lead" data-hero="sub">Dos servicios que se pueden combinar. Empezamos por lo que más te ayuda hoy y dejamos todo listo para crecer después.</p>
     </div>
   </section>
 
@@ -58,6 +58,13 @@ const faqs = [
           <div class="service-copy" data-reveal>
             <h2 class="h2">{s.title}</h2>
             <p class="lead">{s.lead}</p>
+            {s.formats.length > 0 && (
+              <div class="formats">
+                {s.formats.map((f) => (
+                  <div class="format"><b>{f.name} {f.note && <span>{f.note}</span>}</b><p>{f.text}</p></div>
+                ))}
+              </div>
+            )}
             <ul class="checklist">
               {s.items.map((item) => <li><Icon name="check" /><span>{item}</span></li>)}
             </ul>
