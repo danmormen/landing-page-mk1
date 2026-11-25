@@ -1,6 +1,6 @@
-# Estudio Brío · Sitio web
+# K2 Studio · Sitio web
 
-Sitio del estudio (nombre temporal), que ofrece landing pages, sitios web y sistemas a la medida para negocios en crecimiento.
+Sitio de K2 Studio: páginas web y sistemas a la medida para negocios en crecimiento.
 Está hecho con [Astro](https://astro.build): genera HTML estático, rápido y fácil de publicar.
 
 ## Empezar
@@ -70,7 +70,7 @@ El repositorio incluye skills de diseño en `.claude/skills/` (Impeccable y los 
 
 ## Pendientes
 
-- [ ] Nombre definitivo del estudio
+- [ ] Fotos del equipo para "Sobre nosotros"
 - [ ] Número de WhatsApp y correo reales
 - [ ] Conectar el formulario de contacto (Netlify Forms, Formspree…)
 - [ ] Revisar textos y artículos del blog

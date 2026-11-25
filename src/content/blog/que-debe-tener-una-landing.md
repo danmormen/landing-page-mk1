@@ -1,14 +1,14 @@
 ---
-title: "Qué debe tener una buena landing page para un negocio pequeño"
-tag: "Landing pages"
+title: "Qué debe tener una buena página para tu negocio"
+tag: "Páginas web"
 minutes: 5
 cover: "c"
 coverText: "Una página que convence"
 order: 3
-excerpt: "Una landing no necesita ser complicada. Necesita responder rápido tres preguntas: qué ofreces, por qué tú y cómo te contacto."
+excerpt: "Una buena página no necesita ser complicada. Necesita responder rápido tres preguntas: qué ofreces, por qué tú y cómo te contacto."
 ---
 
-Una landing page es una sola página con un objetivo claro: que quien llegue entienda qué ofreces y te contacte. No necesita ser complicada. Necesita responder rápido tres preguntas: **qué ofreces, por qué tú y cómo te contacto.**
+Una página para tu negocio (también llamada *landing page*) es una sola página con un objetivo claro: que quien llegue entienda qué ofreces y te contacte. No necesita ser complicada. Necesita responder rápido tres preguntas: **qué ofreces, por qué tú y cómo te contacto.**
 
 Estos son los elementos que no deberían faltar.
 
@@ -24,7 +24,7 @@ Ya sea WhatsApp, un formulario o una llamada, el siguiente paso debe estar claro
 
 Muestra tus productos o servicios principales con una descripción corta. No hace falta poner todo: lo justo para que el visitante sepa si lo que busca está ahí.
 
-> Una buena landing no dice todo. Dice lo necesario para que te escriban.
+> Una buena página no dice todo. Dice lo necesario para que te escriban.
 
 ## Pruebas de que eres confiable
 
@@ -44,4 +44,4 @@ La mayoría de las personas entrará desde su teléfono. Textos legibles, botone
 
 Al final de la página, repite la invitación a contactarte. Quien llegó hasta abajo está interesado: no lo dejes sin un siguiente paso.
 
-Con estos elementos bien resueltos, una landing sencilla puede trabajar por tu negocio todos los días, incluso cuando tú no estás respondiendo mensajes.
+Con estos elementos bien resueltos, una página sencilla puede trabajar por tu negocio todos los días, incluso cuando tú no estás respondiendo mensajes.

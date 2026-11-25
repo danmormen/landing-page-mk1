@@ -1,6 +1,6 @@
 # Design — "Vitrina"
 
-Sistema visual del sitio de Estudio Brío (nombre temporal). Tokens en `src/styles/global.css` (`:root`).
+Sistema visual del sitio de K2 Studio. Tokens en `src/styles/global.css` (`:root`).
 
 ## Idea
 
@@ -34,6 +34,8 @@ Neutros verdosos más un acento oliva. El color fuerte vive en los ejemplos de p
 - **Marco de navegador** (`.browser`): muestra proyectos dentro de una barra con URL y la etiqueta "Concepto".
 - **Capturas a escala** (`.shot` + `.shot-canvas`): lienzo fijo de 1000×625 escalado con JS para miniaturas exactas.
 - **Listas de servicios y pasos:** columnas divididas por líneas, no tarjetas repetidas.
+- **Logo:** pico de montaña (K2) en `--olive-l` sobre un cuadrado `--olive` de 8px de radio (`BrandMark.astro`, `public/favicon.svg`).
+- **Sobre nosotros:** la única sección oscura (`--ink`) del inicio. Ilustración `Mountain.astro`: una ruta que se dibuja al entrar en pantalla, con campamentos (Hoy → Tu página web → Tu sistema → El siguiente nivel).
 - **Banda CTA:** bloque `--ink` redondeado (28px) al final de cada página.
 - **Formulario:** campos de 1.5px de borde, focus con anillo oliva, errores en línea y estado de enviado.
 

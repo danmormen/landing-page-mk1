@@ -16,10 +16,10 @@ Dueños y encargados de negocios pequeños y medianos que están creciendo (por 
 
 ## Product Purpose
 
-Landing del propio estudio. El estudio ofrece dos servicios a otros negocios:
+Sitio del propio estudio, **K2 Studio**. El estudio ofrece dos servicios a otros negocios:
 
-1. Landing pages / sitios para presentar el negocio y conseguir clientes.
-2. Sistemas a la medida para operar mejor (pedidos, reservas, inventario, paneles, etc.).
+1. **Páginas web para tu negocio**: desde una sola página (landing page) hasta un sitio de varias páginas.
+2. **Sistemas a la medida** para operar mejor (pedidos, citas, inventario, clientes, reportes).
 
 La página debe **informar** qué hacen y para quién, y **facilitar el contacto**. Éxito = un dueño de negocio entiende la oferta en segundos y escribe.
 
@@ -29,7 +29,7 @@ Enfocado en negocios en crecimiento que todavía no son grandes: soluciones a su
 
 ## Capabilities and Constraints
 
-- Servicios confirmados: **landing pages**, **sitios web completos** y **sistemas a la medida** (pedidos, citas, inventario, clientes, reportes). Mantenimiento/soporte **no** se ofrece por ahora: no prometerlo.
+- Servicios confirmados: **páginas web** (una sola página o sitio completo) y **sistemas a la medida** (pedidos, citas, inventario, clientes, reportes). En los textos para clientes se dice "página para tu negocio" y no "landing page"; el término técnico se explica una sola vez. Mantenimiento/soporte **no** se ofrece por ahora: no prometerlo.
 - Sitio de 5 páginas: Inicio, Servicios, Portafolio, Contacto y Blog.
 - Canales de contacto confirmados: WhatsApp, formulario y correo.
 - Pendiente: número de WhatsApp real, correo real y destino del formulario (hoy no envía nada). Se configuran en `src/scripts/main.js` (`CONFIG`).
@@ -37,8 +37,8 @@ Enfocado en negocios en crecimiento que todavía no son grandes: soluciones a su
 
 ## Brand Commitments
 
-- **Nombre: pendiente.** El prototipo usa el nombre temporal "Estudio Brío" (fácil de reemplazar).
-- Sin logo, colores ni tipografía definidos: se proponen en el prototipo.
+- **Nombre: K2 Studio.** Inspirado en el K2, la segunda montaña más alta del mundo: crecer por etapas, con un guía que conoce el camino. Logo: un pico de montaña sobre verde oliva.
+- Equipo pequeño (fundador y su socio). Aún sin fotos del equipo: la sección "Sobre nosotros" usa una ilustración y no debe inventar nombres, años de experiencia ni cifras.
 - Idioma: español, trato de "tú", lenguaje claro y sin tecnicismos.
 - Referencias que dio el usuario (marcan el nivel de calidad, no el estilo obligatorio):
   - Figma Community "Travel Website Landing Page" (titular serif grande, tono cálido y cercano).

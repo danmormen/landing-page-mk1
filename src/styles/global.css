@@ -1,5 +1,5 @@
 /* =========================================================
-   Estudio Brío — sistema de diseño "Vitrina"
+   K2 Studio — sistema de diseño "Vitrina"
    ========================================================= */
 
 :root{
@@ -14,6 +14,7 @@
   --olive-xl:#EBEEDF;
   --line:#D6D9C9;
   --line-2:#E5E7DC;
+  --field-line:#8E937C;
   --danger:#B3261E;
 
   --display:Gloock, "Iowan Old Style", Georgia, serif;
@@ -136,7 +137,7 @@ html[data-menu-open] .menu-btn .bars{display:none}
 .dots{display:flex;gap:7px}.dots i{width:11px;height:11px;border-radius:50%;background:#DADDD0}
 .url{flex:1;max-width:420px;margin:0 auto;height:28px;border-radius:8px;background:#F3F4EF;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--muted)}
 .url svg{width:12px;height:12px}
-.tag{display:inline-flex;align-items:center;font-size:11px;font-weight:600;color:var(--muted);background:#F3F4EF;padding:3px 9px;border-radius:999px;letter-spacing:.01em}
+.tag{display:inline-flex;align-items:center;font-size:12px;font-weight:600;color:var(--muted);background:#F3F4EF;padding:3px 9px;border-radius:999px;letter-spacing:.01em}
 .screen{position:relative;height:clamp(340px,42vw,470px);overflow:hidden}
 .screen .ms{position:absolute;inset:0;opacity:0;transform:translateY(6px);transition:opacity 220ms ease-out,transform 300ms var(--ease-out);pointer-events:none}
 .screen .ms[data-on]{opacity:1;transform:none;pointer-events:auto}
@@ -323,8 +324,8 @@ html[data-menu-open] .menu-btn .bars{display:none}
 .field.full{grid-column:1/-1}
 .field label{font-weight:600;font-size:14px}
 .field label .opt{font-weight:400;color:var(--muted)}
-.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--line);background:#FBFBF8;border-radius:12px;padding:13px 14px;font-size:16px;outline:none;transition:border-color 150ms ease-out,box-shadow 150ms ease-out,background-color 150ms ease-out}
-.field input::placeholder,.field textarea::placeholder{color:#767B66}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--field-line);background:#FBFBF8;border-radius:12px;padding:13px 14px;font-size:16px;outline:none;transition:border-color 150ms ease-out,box-shadow 150ms ease-out,background-color 150ms ease-out}
+.field input::placeholder,.field textarea::placeholder{color:#686D59}
 .field textarea{min-height:120px;resize:vertical}
 .field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{border-color:var(--olive);background:#fff;box-shadow:0 0 0 4px var(--olive-l)}
 .field[data-error] input,.field[data-error] select,.field[data-error] textarea{border-color:var(--danger)}
@@ -444,3 +445,47 @@ html[data-menu-open] .menu-btn .bars{display:none}
 .contact .display{font-size:clamp(2.6rem,5.4vw,4.75rem)}
 .contact .lead{margin-bottom:36px}
 .page-hero .lead + .note{margin-top:28px}
+
+/* ---------- Sobre nosotros (sección oscura con la montaña) ---------- */
+.about{background:var(--ink);color:#F1F2EC}
+.about .h2{color:#fff;margin-bottom:24px}
+.about p{color:#C5C9B6;max-width:52ch}
+.about p + p{margin-top:16px}
+.about ::selection{background:var(--olive);color:#fff}
+.about-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(40px,6vw,88px);align-items:center}
+.mountain{width:100%;height:auto;overflow:visible}
+.mountain text{font-family:var(--body);font-size:14px;font-weight:600;fill:#F1F2EC}
+.js .mountain .route{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1800ms var(--ease-out) 250ms}
+.js .mountain .camp{opacity:0;transform:translateY(6px);transition:opacity 500ms ease-out,transform 600ms var(--ease-out);transition-delay:calc(450ms + var(--i) * 380ms)}
+.js .in .mountain .route{stroke-dashoffset:0}
+.js .in .mountain .camp{opacity:1;transform:none}
+.values{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,48px);margin-top:clamp(56px,7vw,88px);padding-top:40px;border-top:1px solid rgba(220,226,198,.16);list-style:none;padding-left:0;margin-bottom:0}
+.values h3{font-family:var(--display);font-size:clamp(22px,2.2vw,26px);line-height:1.15;color:#fff;margin-bottom:10px}
+.values p{font-size:16px}
+@media (max-width:900px){.about-grid{grid-template-columns:1fr}.values{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.js .mountain .route{transition:none;stroke-dashoffset:0}.js .mountain .camp{transition:opacity 300ms ease-out;transform:none}}
+
+/* Servicios en dos columnas */
+.offer.two{grid-template-columns:1fr 1fr}
+.offer.two .offer-item ul{list-style:none;margin:6px 0 4px;padding:0;display:grid;gap:8px;color:var(--muted);font-size:16px}
+.offer.two .offer-item li{display:flex;gap:10px;align-items:flex-start}
+.offer.two .offer-item li svg{width:18px;height:18px;color:var(--olive);flex:none;margin-top:4px}
+@media (max-width:860px){.offer.two{grid-template-columns:1fr}}
+
+/* Formatos de página web (servicios) */
+.formats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:-8px 0 28px}
+.format{padding:16px 18px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.format b{display:block;font-size:16px;margin-bottom:6px}
+.format b span{font-weight:400;color:var(--muted);font-size:14px}
+.format p{font-size:15px;color:var(--muted);line-height:1.5}
+@media (max-width:520px){.formats{grid-template-columns:1fr}}
+
+/* Objetivos táctiles cómodos y vitrina ajustada en móvil */
+@media (max-width:860px){
+  .screen{height:300px}
+}
+@media (max-width:640px){
+  .tab{height:44px}
+  .arrow-link,.back{min-height:44px}
+}
+@media (max-width:640px){.mountain text{font-size:17px}}

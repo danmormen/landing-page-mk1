@@ -39,4 +39,4 @@ Si estás empezando, vendes pocos productos y casi todos tus clientes llegan por
 - Necesitas verte más profesional frente a empresas o clientes nuevos.
 - Quieres recibir pedidos, citas o cotizaciones de forma ordenada.
 
-Lo mejor es usar las dos cosas juntas: tus redes llevan a la gente a tu página, y tu página le da toda la información y una forma clara de contactarte. Una landing page sencilla suele ser el primer paso ideal.
+Lo mejor es usar las dos cosas juntas: tus redes llevan a la gente a tu página, y tu página le da toda la información y una forma clara de contactarte. Una página sencilla para tu negocio suele ser el primer paso ideal.

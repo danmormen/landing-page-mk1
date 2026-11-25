@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import MiniSite from '../components/MiniSite.astro';
+import Mountain from '../components/Mountain.astro';
 import Steps from '../components/Steps.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import PostRow from '../components/PostRow.astro';
@@ -19,23 +20,34 @@ const showcase = [
 ];
 
 const offer = [
-  { icon: 'page', title: 'Landing pages', text: 'Una página clara que explica qué ofreces, por qué elegirte y cómo contactarte.', href: '/servicios#landing' },
-  { icon: 'site', title: 'Sitios web completos', text: 'Varias páginas para mostrar todo tu negocio: servicios, catálogo, ubicación y más.', href: '/servicios#sitios' },
-  { icon: 'sys', title: 'Sistemas a la medida', text: 'Pedidos, citas, inventario y clientes en un solo lugar, para dejar el cuaderno atrás.', href: '/servicios#sistemas' },
+  {
+    icon: 'page', title: 'Páginas web para tu negocio', href: '/servicios#paginas',
+    text: 'Desde una sola página hasta un sitio completo: tu negocio explicado con claridad y listo para recibir clientes.',
+    points: ['Diseño a la medida de tu marca', 'Botón directo a WhatsApp', 'Se ve bien en el celular'],
+  },
+  {
+    icon: 'sys', title: 'Sistemas a la medida', href: '/servicios#sistemas',
+    text: 'Pedidos, citas, inventario y clientes en un solo lugar, para dejar el cuaderno y las hojas sueltas atrás.',
+    points: ['Hecho para cómo trabajas', 'Fácil de usar para tu equipo', 'Reportes para decidir mejor'],
+  },
 ] as const;
 
-const audience = ['Cafeterías y restaurantes', 'Ferreterías', 'Clínicas y consultorios', 'Talleres', 'Tiendas y boutiques', 'Panaderías', 'Salones de belleza', 'Servicios profesionales', 'Gimnasios', '…y muchos más'];
+const values = [
+  { title: 'Hecho a tu medida', text: 'Nada de plantillas: cada página y cada sistema parte de cómo funciona tu negocio.' },
+  { title: 'Claro y sin tecnicismos', text: 'Te explicamos todo en tu idioma y siempre sabes en qué paso vamos.' },
+  { title: 'Pensado para crecer', text: 'Empezamos con lo que necesitas hoy y dejamos todo listo para lo que viene.' },
+];
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
 ---
 <Base
-  title={`${BRAND} · Landing pages y sistemas para negocios en crecimiento`}
-  description="Diseñamos landing pages, sitios web y sistemas a la medida para negocios pequeños y medianos que están creciendo."
+  title={`${BRAND} · Páginas web y sistemas para negocios en crecimiento`}
+  description="Diseñamos páginas web y sistemas a la medida para negocios pequeños y medianos que están creciendo."
 >
   <section class="hero">
     <div class="wrap">
       <h1 class="display" data-hero="lead">Tu negocio, bien presentado y mejor organizado.</h1>
-      <p class="lead" data-hero="sub">Diseñamos landing pages, sitios web y sistemas a la medida para negocios que están creciendo. Tú nos cuentas cómo trabajas; nosotros lo convertimos en algo que funciona.</p>
+      <p class="lead" data-hero="sub">Diseñamos páginas web y sistemas a la medida para negocios que están creciendo. Tú nos cuentas cómo trabajas; nosotros lo convertimos en algo que funciona.</p>
       <div class="hero-ctas" data-hero="ctas">
         <a class="btn btn-primary" data-wa href="/contacto"><Icon name="chat" />Escríbenos por WhatsApp</a>
         <a class="btn btn-ghost" href="/servicios">Ver servicios</a>
@@ -63,19 +75,36 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, 
   <section class="section on-white">
     <div class="wrap">
       <div class="section-head">
-        <h2 class="h2" data-reveal>Todo lo que tu negocio necesita para crecer en internet</h2>
-        <p class="lead" data-reveal style="--d:90ms">Hacemos tres cosas y las hacemos a la medida: no hay dos negocios iguales, así que no hay dos proyectos iguales.</p>
+        <h2 class="h2" data-reveal>Dos formas de ayudarte a crecer</h2>
+        <p class="lead" data-reveal style="--d:90ms">Para cafeterías, ferreterías, clínicas, talleres, tiendas y cualquier negocio que ya tiene clientes y quiere dar el siguiente paso.</p>
       </div>
-      <div class="offer" data-stagger>
+      <div class="offer two" data-stagger>
         {offer.map((o) => (
           <div class="offer-item" data-reveal>
             <div class="ico"><Icon name={o.icon} /></div>
             <h3 class="h3">{o.title}</h3>
             <p>{o.text}</p>
+            <ul>{o.points.map((p) => <li><Icon name="check" /><span>{p}</span></li>)}</ul>
             <a class="arrow-link" href={o.href}>Ver más<Icon name="arrow" /></a>
           </div>
         ))}
       </div>
+    </div>
+  </section>
+
+  <section class="section about" id="nosotros">
+    <div class="wrap">
+      <div class="about-grid">
+        <div data-reveal>
+          <h2 class="h2">Te ayudamos a subir al siguiente nivel</h2>
+          <p>El K2 es la segunda montaña más alta del mundo y una de las más difíciles de escalar. Nadie llega a la cima de un salto: se sube por etapas, con buena preparación y con alguien que conoce el camino.</p>
+          <p>Así trabajamos con los negocios. Entendemos dónde estás hoy, trazamos la ruta y construimos las herramientas para el siguiente tramo. Somos un estudio pequeño a propósito: hablas directo con quienes diseñan y programan tu proyecto.</p>
+        </div>
+        <div data-reveal style="--d:120ms"><Mountain /></div>
+      </div>
+      <ul class="values" data-stagger>
+        {values.map((v) => <li data-reveal><h3>{v.title}</h3><p>{v.text}</p></li>)}
+      </ul>
     </div>
   </section>
 
@@ -90,18 +119,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, 
   </section>
 
   <section class="section on-white">
-    <div class="wrap who">
-      <div>
-        <h2 class="h2" data-reveal style="margin-bottom:20px">Para negocios que están creciendo</h2>
-        <p class="lead" data-reveal style="--d:90ms">Trabajamos con negocios pequeños y medianos que ya tienen clientes y quieren dar el siguiente paso: verse mejor, conseguir más contactos y dejar de hacer todo a mano.</p>
-      </div>
-      <div class="chips" data-stagger>
-        {audience.map((c) => <span class="chip" data-reveal="fade">{c}</span>)}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
     <div class="wrap">
       <div class="section-head">
         <h2 class="h2" data-reveal>Proyectos</h2>
@@ -118,7 +135,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, 
     </div>
   </section>
 
-  <section class="section on-white">
+  <section class="section">
     <div class="wrap">
       <div class="section-head">
         <h2 class="h2" data-reveal>Del blog</h2>

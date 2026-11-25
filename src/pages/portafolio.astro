@@ -8,12 +8,11 @@ import { PROJECTS } from '../data/projects';
 
 const filters = [
   { key: 'all', label: 'Todos' },
-  { key: 'landing', label: 'Landing pages' },
-  { key: 'sitio', label: 'Sitios web' },
+  { key: 'web', label: 'Páginas web' },
   { key: 'sistema', label: 'Sistemas' },
 ];
 ---
-<Base title={`Portafolio · ${BRAND}`} description="Proyectos conceptuales de landing pages, sitios web y sistemas para negocios.">
+<Base title={`Portafolio · ${BRAND}`} description="Proyectos conceptuales de páginas web y sistemas para negocios.">
   <section class="page-hero">
     <div class="wrap">
       <h1 class="display" data-hero="lead">Portafolio</h1>
@@ -31,6 +30,7 @@ const filters = [
           <button class="filter" type="button" data-filter={f.key} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}</button>
         ))}
       </div>
+      <h2 class="sr-only">Proyectos</h2>
       <div class="projects two" data-stagger>
         {PROJECTS.map((p) => <ProjectCard project={p} />)}
       </div>
