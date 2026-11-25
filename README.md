@@ -64,6 +64,8 @@ DESIGN.md               Reglas visuales y de animación
 4. Antes de pedir revisión, corre `npm run build` y `npm run check`, y revisa la página en celular.
 5. Otra persona revisa el PR. Cuando lo aprueba, se hace merge a `main`.
 
+Cada PR corre una **revisión automática (CI)** en GitHub Actions (`.github/workflows/ci.yml`) que ejecuta `npm run check` y `npm run build`. Si sale en rojo, revisa el detalle en la pestaña **Checks** del PR y corrígelo antes de unirlo.
+
 ### Con Claude Code
 
 El repositorio incluye skills de diseño en `.claude/skills/` (Impeccable y los skills de Emil Kowalski) y contexto en `CLAUDE.md`, `PRODUCT.md` y `DESIGN.md`. Si usas Claude Code en esta carpeta, se cargan automáticamente. Algunos comandos útiles: `/impeccable critique`, `/impeccable polish` y `/review-animations`.
