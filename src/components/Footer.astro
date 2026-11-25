@@ -1,0 +1,31 @@
+---
+import { BRAND, NAV, TAGLINE } from '../data/site';
+import BrandMark from './BrandMark.astro';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/"><BrandMark />{BRAND}</a>
+        <p>{TAGLINE}</p>
+      </div>
+      <div>
+        <h4>Sitio</h4>
+        <ul>{NAV.map((item) => <li><a href={item.href}>{item.label}</a></li>)}</ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a data-wa href="/contacto">WhatsApp</a></li>
+          <li><a data-email data-email-text href="/contacto">Correo</a></li>
+          <li><a href="/contacto#formulario">Formulario</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} {BRAND}</span>
+      <span>Hecho con cuidado para negocios que crecen.</span>
+    </div>
+  </div>
+</footer>

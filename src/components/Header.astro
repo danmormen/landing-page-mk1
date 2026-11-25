@@ -1,0 +1,35 @@
+---
+import { BRAND, NAV } from '../data/site';
+import BrandMark from './BrandMark.astro';
+import Icon from './Icon.astro';
+
+interface Props { active: string }
+const { active } = Astro.props;
+const isActive = (href: string) => (href === '/' ? active === '/' : active.startsWith(href));
+---
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="/"><BrandMark />{BRAND}</a>
+    <nav aria-label="Principal">
+      <ul class="nav-links">
+        {NAV.map((item) => (
+          <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary btn-sm" data-wa href="/contacto"><Icon name="chat" />Hablemos</a>
+      <button class="menu-btn" type="button" aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menú">
+        <Icon name="bars" class="bars" /><Icon name="x" class="x" />
+      </button>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    {NAV.map((item) => (
+      <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}<Icon name="arrow" size={22} /></a></li>
+    ))}
+  </ul>
+  <a class="btn btn-primary" data-wa href="/contacto"><Icon name="chat" />Escríbenos por WhatsApp</a>
+</div>

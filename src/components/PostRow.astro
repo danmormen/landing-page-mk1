@@ -1,0 +1,16 @@
+---
+import Icon from './Icon.astro';
+import type { CollectionEntry } from 'astro:content';
+interface Props { post: CollectionEntry<'blog'> }
+const { post } = Astro.props;
+const d = post.data;
+---
+<a class="post-row" href={`/blog/${post.id}`} data-reveal>
+  <div class={`cover cover-${d.cover}`} aria-hidden="true"><span>{d.coverText}</span></div>
+  <div>
+    <div class="post-meta"><span class="tag">{d.tag}</span><span>{d.minutes} min de lectura</span></div>
+    <h3>{d.title}</h3>
+    <p>{d.excerpt}</p>
+  </div>
+  <Icon name="arrow" class="go" />
+</a>

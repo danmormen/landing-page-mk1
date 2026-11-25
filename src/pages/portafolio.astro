@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { BRAND } from '../data/site';
+import { PROJECTS } from '../data/projects';
+
+const filters = [
+  { key: 'all', label: 'Todos' },
+  { key: 'landing', label: 'Landing pages' },
+  { key: 'sitio', label: 'Sitios web' },
+  { key: 'sistema', label: 'Sistemas' },
+];
+---
+<Base title={`Portafolio · ${BRAND}`} description="Proyectos conceptuales de landing pages, sitios web y sistemas para negocios.">
+  <section class="page-hero">
+    <div class="wrap">
+      <h1 class="display" data-hero="lead">Portafolio</h1>
+      <p class="lead" data-hero="sub">Proyectos que diseñamos para mostrar cómo resolvemos las necesidades de negocios distintos: desde una cafetería hasta un taller.</p>
+      {PROJECTS.some((p) => p.concept) && (
+        <p class="note" data-hero="ctas"><Icon name="info" /><span>Estos proyectos son conceptos de ejemplo: los negocios no son reales. Pronto publicaremos nuestros primeros casos con clientes.</span></p>
+      )}
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="filters" role="group" aria-label="Filtrar proyectos" data-reveal="fade">
+        {filters.map((f, i) => (
+          <button class="filter" type="button" data-filter={f.key} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}</button>
+        ))}
+      </div>
+      <div class="projects two" data-stagger>
+        {PROJECTS.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="¿Te imaginas el tuyo aquí?" text="Cuéntanos de tu negocio y diseñamos algo hecho a su medida." />
+</Base>

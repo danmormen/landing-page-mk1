@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototipo · Hero · Estudio Brío</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Gloock&family=Hanken+Grotesk:wght@400;500;600&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============ Base ============ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img,svg{display:block}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+:root{--ease-out:cubic-bezier(0.23,1,0.32,1)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.wrap{width:min(1200px,100% - 48px);margin-inline:auto}
+@media (max-width:640px){.wrap{width:calc(100% - 32px)}}
+
+/* ============ Shared: botones ============ */
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 22px;border-radius:999px;border:0;font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;transition:transform 160ms var(--ease-out),background-color 160ms ease-out,box-shadow 160ms ease-out}
+.btn:active{transform:scale(0.97)}
+.btn svg{width:20px;height:20px;flex:none}
+.link{font-weight:500;text-underline-offset:4px;text-decoration-thickness:1.5px}
+
+/* ============ Shared: secciones de abajo (usan las variables de cada variante) ============ */
+.below{background:var(--s-bg);color:var(--s-ink);font-family:var(--s-body);padding:112px 0 140px}
+.below h2{font-family:var(--s-display);font-weight:var(--s-display-w,700);font-size:clamp(2rem,4vw,3.25rem);line-height:1.02;letter-spacing:var(--s-track,-0.02em);margin:0 0 20px;text-wrap:balance}
+.below .lead{color:var(--s-muted);font-size:18px;line-height:1.55;max-width:56ch;margin:0}
+.services{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:56px;padding-top:40px;border-top:1px solid var(--s-line)}
+.service h3{font-family:var(--s-display);font-weight:var(--s-display-w,700);font-size:clamp(1.5rem,2.4vw,2rem);letter-spacing:var(--s-track,-0.02em);margin:16px 0 12px;line-height:1.1}
+.service p{color:var(--s-muted);line-height:1.6;margin:0 0 16px;max-width:46ch}
+.service ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.service li{display:flex;gap:10px;align-items:baseline;line-height:1.45}
+.service li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--s-accent);transform:translateY(-1px)}
+.service .ico{width:44px;height:44px;color:var(--s-accent)}
+.contact{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;margin-top:128px;align-items:start}
+.contact-ways{display:grid;gap:14px;margin-top:32px}
+.contact-ways .btn{justify-content:flex-start;width:fit-content}
+.btn-s{background:var(--s-accent);color:var(--s-accent-ink)}
+.btn-s-ghost{background:transparent;color:var(--s-ink);box-shadow:inset 0 0 0 1.5px var(--s-line)}
+@media (hover:hover) and (pointer:fine){.btn-s:hover{filter:brightness(1.06)}.btn-s-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--s-ink)}}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:18px;background:var(--s-field-bg);border:1px solid var(--s-line);border-radius:var(--s-radius,20px);padding:32px}
+.field{display:grid;gap:8px}
+.field.full{grid-column:1/-1}
+.field label{font-weight:600;font-size:14px}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--s-line);background:var(--s-field);border-radius:12px;padding:13px 14px;font-size:16px;outline:none;transition:border-color 150ms ease-out,box-shadow 150ms ease-out}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{border-color:var(--s-accent);box-shadow:0 0 0 4px var(--s-focus)}
+.field[data-error] input,.field[data-error] select,.field[data-error] textarea{border-color:#C8372D}
+.field .err{display:none;color:#C8372D;font-size:13px;font-weight:500}
+.field[data-error] .err{display:block}
+.form .actions{grid-column:1/-1;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.form .note{color:var(--s-muted);font-size:13px}
+.form-done{grid-column:1/-1;display:none;padding:20px;border-radius:14px;background:var(--s-focus);font-weight:500;line-height:1.5}
+.form[data-sent] .form-done{display:block}
+.form[data-sent] .field,.form[data-sent] .actions{display:none}
+@media (max-width:860px){
+  .services,.contact{grid-template-columns:1fr;gap:48px}
+  .contact{margin-top:96px}
+  .below{padding:80px 0 120px}
+}
+@media (max-width:520px){.form{grid-template-columns:1fr;padding:22px}}
+
+/* =========================================================
+   VARIANTE 1 · CUADERNO  (antes / después que se arrastra)
+   ========================================================= */
+.v1{--paper:#F3F5FA;--ink:#141F45;--muted:#4B5677;--blue:#2B50D8;--pen:#2441B5;--lime:#D9F24F;--red:#E5484D;--line:#D5DBEA;
+  background:var(--paper);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;
+  --s-bg:#fff;--s-ink:var(--ink);--s-muted:var(--muted);--s-accent:var(--blue);--s-accent-ink:#fff;--s-line:var(--line);--s-display:"Bricolage Grotesque",sans-serif;--s-body:"Bricolage Grotesque",sans-serif;--s-field:#fff;--s-field-bg:var(--paper);--s-focus:#DCE4FF;--s-track:-0.035em}
+.v1 ::selection{background:var(--lime);color:var(--ink)}
+.v1-nav{display:flex;align-items:center;justify-content:space-between;height:84px}
+.v1-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-0.03em;text-decoration:none}
+.v1-brand svg{width:30px;height:30px}
+.v1-links{display:flex;align-items:center;gap:32px;font-weight:500}
+.v1-links a{text-decoration:none}
+.v1-links a:not(.btn){opacity:.8}
+@media (hover:hover) and (pointer:fine){.v1-links a:not(.btn):hover{opacity:1}}
+.v1-nav .btn{height:42px;padding:0 18px;font-size:15px;background:var(--ink);color:#fff}
+.v1-hero{display:grid;grid-template-columns:1fr 1.08fr;gap:56px;align-items:center;padding:40px 0 64px;min-height:calc(100svh - 84px - 72px)}
+.v1 h1{font-weight:800;font-size:clamp(2.75rem,5.6vw,5.25rem);line-height:.96;letter-spacing:-0.04em;margin:0 0 28px;text-wrap:balance}
+.v1 h1 mark{white-space:nowrap;background:linear-gradient(transparent 58%,var(--lime) 58% 92%,transparent 92%);color:inherit;padding:0 .04em}
+.v1-sub{font-size:19px;line-height:1.55;color:var(--muted);max-width:44ch;margin:0 0 36px}
+.v1-ctas{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.v1-ctas .btn{background:var(--blue);color:#fff;box-shadow:0 10px 24px -10px rgba(43,80,216,.7)}
+@media (hover:hover) and (pointer:fine){.v1-ctas .btn:hover{background:#2245c4}}
+.v1-what{display:flex;gap:28px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:15px;flex-wrap:wrap}
+.v1-what span{display:flex;align-items:center;gap:8px}
+.v1-what svg{width:18px;height:18px;color:var(--blue)}
+
+.v1-compare{position:relative;aspect-ratio:10/9;border-radius:20px;overflow:hidden;background:#fff;--pos:56%;
+  box-shadow:0 40px 70px -30px rgba(20,31,69,.45),0 2px 8px rgba(20,31,69,.08),0 0 0 1px rgba(20,31,69,.06);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.v1-layer{position:absolute;inset:0}
+/* Después: sistema */
+.v1-sys{padding:56px 26px 22px;display:flex;flex-direction:column;gap:16px;background:#fff}
+.v1-sys-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.v1-sys-top b{font-size:19px;letter-spacing:-0.02em}
+.v1-sys-top small{color:var(--muted);font-size:13px}
+.v1-table{width:100%;border-collapse:collapse;font-size:14px}
+.v1-table th{font-weight:500;color:var(--muted);text-align:left;font-size:12px;padding:0 8px 10px;border-bottom:1px solid var(--line)}
+.v1-table td{padding:12px 8px;border-bottom:1px solid #EEF1F7;white-space:nowrap}
+.v1-table td:first-child,.v1-table th:first-child{padding-left:0}
+.v1-chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600}
+.v1-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.c-ok{background:#E3F6E8;color:#1E7A3C}.c-wait{background:#FFF1D6;color:#9A5B00}.c-move{background:#E4EAFF;color:#2B50D8}.c-due{background:#FDE5E4;color:#B3261E}
+.v1-remind{margin-top:auto;display:flex;gap:12px;align-items:center;padding:14px 16px;border-radius:14px;background:var(--paper);font-size:14px}
+.v1-remind svg{width:20px;height:20px;color:var(--blue);flex:none}
+.v1-remind span{color:var(--muted)}
+/* Antes: cuaderno */
+.v1-note{clip-path:inset(0 calc(100% - var(--pos)) 0 0);
+  background:
+    linear-gradient(90deg,transparent 58px,rgba(229,72,77,.55) 58px 60px,transparent 60px),
+    repeating-linear-gradient(#FDFDFB 0 35px,#B4C4EA 35px 36px);
+  background-position:0 0,0 10px;
+  font-family:Kalam,cursive;color:var(--pen);padding:54px 24px 0 78px;font-size:clamp(17px,1.6vw,21px);line-height:36px}
+.v1-note p{margin:0;white-space:nowrap}
+.v1-note .h{font-weight:700;font-size:1.15em;transform:rotate(-1.2deg);transform-origin:left;margin-bottom:0}
+.v1-note s{text-decoration-thickness:2px;opacity:.8}
+.v1-note .tilt{transform:rotate(-1.5deg);transform-origin:left}
+.v1-note .red{color:#C8372D;font-weight:700}
+.v1-note .circle{position:relative;display:inline-block}
+.v1-note .circle svg{position:absolute;inset:-6px -10px;width:calc(100% + 20px);height:calc(100% + 12px);overflow:visible}
+.v1-tag{position:absolute;top:14px;z-index:3;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:700;display:flex;align-items:center;letter-spacing:.02em;pointer-events:none}
+.v1-tag.l{left:14px;background:var(--ink);color:#fff}
+.v1-tag.r{right:14px;background:var(--lime);color:var(--ink)}
+.v1-demo{position:absolute;bottom:12px;right:14px;z-index:3;font-size:11px;color:var(--muted);background:rgba(255,255,255,.9);padding:3px 8px;border-radius:999px;pointer-events:none}
+.v1-handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:var(--ink);z-index:2;pointer-events:none}
+.v1-knob{position:absolute;top:50%;left:50%;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(20,31,69,.35);transition:transform 160ms var(--ease-out)}
+.v1-knob svg{width:24px;height:24px}
+.v1-compare:active .v1-knob{transform:scale(.94)}
+.v1-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:ew-resize;z-index:4;touch-action:pan-y}
+.v1-range:focus-visible ~ .v1-handle .v1-knob{box-shadow:0 0 0 4px var(--lime),0 6px 18px rgba(20,31,69,.35)}
+.v1-hint{margin-top:14px;text-align:center;font-size:14px;color:var(--muted)}
+@media (max-width:980px){
+  .v1-hero{grid-template-columns:1fr;gap:40px;min-height:0;padding-top:24px}
+  .v1-links a:not(.btn){display:none}
+}
+@media (max-width:520px){
+  .v1-sys{padding:52px 16px 16px}
+  .v1-table .opt{display:none}
+  .v1-note{padding-left:56px;background:linear-gradient(90deg,transparent 40px,rgba(229,72,77,.55) 40px 42px,transparent 42px),repeating-linear-gradient(#FDFDFB 0 31px,#B4C4EA 31px 32px);background-position:0 0,0 11px;line-height:32px;font-size:16px;padding-top:50px}
+  .v1-compare{aspect-ratio:4/5}
+}
+
+/* =========================================================
+   VARIANTE 2 · RÓTULO  (color pleno, letrero, conversación)
+   ========================================================= */
+.v2{--sun:#FFC633;--green:#0E3A2B;--green-2:#1C5A43;--tomato:#DB4128;--ink:#0E3A2B;--muted:#2F5A49;
+  background:var(--sun);color:var(--green);font-family:Figtree,system-ui,sans-serif;
+  --s-bg:#FFF4D1;--s-ink:var(--green);--s-muted:#3E6656;--s-accent:var(--green);--s-accent-ink:var(--sun);--s-line:#EAD9A0;--s-display:"Bagel Fat One",sans-serif;--s-display-w:400;--s-body:Figtree,sans-serif;--s-field:#FFFBEE;--s-field-bg:#FFEDB5;--s-focus:#FFD866;--s-track:-0.01em;--s-radius:28px}
+.v2 ::selection{background:var(--green);color:var(--sun)}
+.v2-nav{display:flex;align-items:center;justify-content:space-between;height:88px}
+.v2-brand{font-family:"Bagel Fat One",sans-serif;font-size:26px;text-decoration:none;letter-spacing:-0.01em}
+.v2-links{display:flex;gap:30px;align-items:center;font-weight:600}
+.v2-links a{text-decoration:none}
+.v2-links .btn{height:44px;padding:0 20px;font-size:15px;background:var(--green);color:var(--sun)}
+.v2-hero{display:grid;grid-template-columns:1.25fr .9fr;gap:40px;align-items:center;padding:24px 0 72px;min-height:calc(100svh - 88px)}
+.v2 h1{font-family:"Bagel Fat One",sans-serif;font-weight:400;font-size:clamp(3rem,7.4vw,6rem);line-height:.98;letter-spacing:-0.01em;margin:0 0 44px}
+.v2 h1 span{display:block}
+.v2 h1 .t{color:var(--tomato)}
+.v2-sub{font-size:20px;line-height:1.5;max-width:40ch;margin:0 0 36px;color:var(--muted);font-weight:500}
+.v2-ctas{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.v2-ctas .btn{background:var(--green);color:var(--sun);height:58px;padding:0 26px;font-size:17px;box-shadow:0 12px 24px -12px rgba(14,58,43,.6)}
+@media (hover:hover) and (pointer:fine){.v2-ctas .btn:hover{background:var(--green-2)}}
+.v2-side{position:relative;display:grid;justify-items:center;gap:0}
+.v2-sign{position:relative;width:min(300px,80%);transform-origin:50% -60px;animation:v2-swing 1600ms var(--ease-out) both;padding-top:60px}
+.v2-sign::before,.v2-sign::after{content:"";position:absolute;top:0;height:64px;width:2px;background:var(--green)}
+.v2-sign::before{left:22%;transform:rotate(14deg);transform-origin:top}
+.v2-sign::after{right:22%;transform:rotate(-14deg);transform-origin:top}
+.v2-board{position:relative;background:var(--green);color:var(--sun);border-radius:18px;padding:18px 24px 16px;text-align:center;box-shadow:0 20px 30px -16px rgba(14,58,43,.55)}
+.v2-board::before,.v2-board::after{content:"";position:absolute;top:10px;width:10px;height:10px;border-radius:50%;background:var(--sun);opacity:.85}
+.v2-board::before{left:calc(22% - 2px)}.v2-board::after{right:calc(22% - 2px)}
+.v2-board b{display:block;font-family:"Bagel Fat One",sans-serif;font-weight:400;font-size:52px;line-height:1;letter-spacing:.02em}
+.v2-board small{display:block;margin-top:6px;font-weight:600;font-size:14px;opacity:.9}
+@keyframes v2-swing{0%{transform:rotate(-9deg)}30%{transform:rotate(6deg)}55%{transform:rotate(-3deg)}75%{transform:rotate(1.4deg)}90%{transform:rotate(-.5deg)}100%{transform:rotate(0)}}
+.v2-chat{width:min(380px,100%);margin-top:-6px;background:#fff;border-radius:26px;padding:16px;box-shadow:0 30px 60px -28px rgba(14,58,43,.55),0 2px 6px rgba(14,58,43,.1);transform:rotate(1.5deg);color:#14231d}
+.v2-chat-top{display:flex;align-items:center;gap:10px;padding:2px 4px 12px;border-bottom:1px solid #F1EBDA}
+.v2-ava{width:36px;height:36px;border-radius:50%;background:var(--tomato);color:#fff;display:grid;place-items:center;font-family:"Bagel Fat One";font-size:16px}
+.v2-chat-top b{display:block;font-size:15px}
+.v2-chat-top small{color:#5b6b64;font-size:12px}
+.v2-chat-top .demo{margin-left:auto;font-size:11px;background:#F5EFDD;padding:3px 8px;border-radius:999px;color:#5b6b64}
+.v2-msgs{display:grid;gap:8px;padding-top:14px}
+.v2-msg{max-width:84%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.4;opacity:0;transform:translateY(8px) scale(.98);animation:v2-in 380ms var(--ease-out) forwards}
+.v2-msg.in{background:#F2F0E9;border-bottom-left-radius:6px;justify-self:start;transform-origin:bottom left}
+.v2-msg.out{background:var(--green);color:#fff;border-bottom-right-radius:6px;justify-self:end;transform-origin:bottom right}
+.v2-msg .lnk{display:block;margin-top:8px;padding:10px 12px;background:rgba(255,255,255,.12);border-radius:12px;font-size:13px}
+.v2-msg .lnk b{display:block;color:var(--sun);font-size:14px}
+.v2-sys{justify-self:center;font-size:12px;font-weight:600;color:#1E7A3C;background:#E3F6E8;padding:6px 12px;border-radius:999px;opacity:0;animation:v2-in 380ms var(--ease-out) forwards;display:flex;gap:6px;align-items:center}
+.v2-sys svg{width:14px;height:14px}
+@keyframes v2-in{to{opacity:1;transform:none}}
+.v2-strip{border-top:2px solid var(--green);display:flex;justify-content:space-between;gap:24px;padding:22px 0 26px;font-weight:700;font-size:17px;flex-wrap:wrap}
+.v2-strip span{display:flex;gap:10px;align-items:center}
+.v2-strip svg{width:22px;height:22px}
+@media (max-width:980px){.v2-hero{grid-template-columns:1fr;min-height:0;gap:56px}.v2-links a:not(.btn){display:none}}
+@media (max-width:520px){.v2-board b{font-size:42px}.v2-strip{font-size:15px}}
+
+/* =========================================================
+   VARIANTE 3 · VITRINA  (sobrio, centrado, ejemplos en vivo)
+   ========================================================= */
+.v3{--bg:#F1F2EC;--ink:#17190F;--muted:#565B49;--olive:#4C5A26;--olive-d:#3C481D;--olive-l:#DCE2C6;--line:#D6D9C9;
+  background:var(--bg);color:var(--ink);font-family:"Hanken Grotesk",system-ui,sans-serif;
+  --s-bg:#fff;--s-ink:var(--ink);--s-muted:var(--muted);--s-accent:var(--olive);--s-accent-ink:#fff;--s-line:var(--line);--s-display:Gloock,serif;--s-display-w:400;--s-body:"Hanken Grotesk",sans-serif;--s-field:#fff;--s-field-bg:var(--bg);--s-focus:var(--olive-l);--s-track:-0.015em}
+.v3 ::selection{background:var(--olive-l);color:var(--ink)}
+.v3-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84px}
+.v3-brand{font-family:Gloock,serif;font-size:24px;text-decoration:none}
+.v3-links{display:flex;gap:34px;font-weight:500;color:var(--muted)}
+.v3-links a{text-decoration:none}
+@media (hover:hover) and (pointer:fine){.v3-links a:hover{color:var(--ink)}}
+.v3-nav .btn{justify-self:end;height:42px;padding:0 18px;font-size:15px;background:var(--olive);color:#fff}
+.v3-hero{text-align:center;padding:72px 0 0}
+.v3 h1{font-family:Gloock,serif;font-weight:400;font-size:clamp(2.75rem,6.6vw,5.75rem);line-height:1.02;letter-spacing:-0.02em;margin:0 auto 26px;max-width:15ch;text-wrap:balance}
+.v3-sub{font-size:19px;line-height:1.55;color:var(--muted);max-width:52ch;margin:0 auto 34px}
+.v3-ctas{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.v3-ctas .btn{background:var(--olive);color:#fff}
+.v3-ctas .ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+@media (hover:hover) and (pointer:fine){.v3-ctas .btn:not(.ghost):hover,.v3-nav .btn:hover{background:var(--olive-d)}.v3-ctas .ghost:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}}
+.v3-tabs{display:inline-flex;gap:4px;padding:4px;margin:64px auto 18px;background:#E5E7DD;border-radius:999px;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.v3-tabs::-webkit-scrollbar{display:none}
+.v3-tab{border:0;background:transparent;height:36px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;white-space:nowrap;transition:background-color 150ms ease-out,color 150ms ease-out}
+.v3-tab[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(23,25,15,.12)}
+.v3-tab:focus-visible{outline:2px solid var(--olive);outline-offset:2px}
+.v3-browser{max-width:1080px;margin:0 auto;background:#fff;border-radius:18px 18px 0 0;border:1px solid var(--line);border-bottom:0;overflow:hidden;box-shadow:0 -10px 60px -30px rgba(23,25,15,.35);animation:v3-rise 700ms var(--ease-out) both;animation-delay:120ms}
+@keyframes v3-rise{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.v3-bar{display:flex;align-items:center;gap:14px;height:46px;padding:0 16px;border-bottom:1px solid #ECEEE6}
+.v3-dots{display:flex;gap:7px}.v3-dots i{width:11px;height:11px;border-radius:50%;background:#DADDD0}
+.v3-url{flex:1;max-width:420px;margin:0 auto;height:28px;border-radius:8px;background:#F3F4EF;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--muted)}
+.v3-url svg{width:12px;height:12px}
+.v3-demo{font-size:11px;color:var(--muted);background:#F3F4EF;padding:3px 8px;border-radius:999px}
+.v3-screen{position:relative;height:clamp(340px,42vw,460px);overflow:hidden}
+.v3-site{position:absolute;inset:0;padding:clamp(22px,4vw,48px);opacity:0;transform:translateY(6px);transition:opacity 220ms ease-out,transform 280ms var(--ease-out);pointer-events:none;text-align:left}
+.v3-site[data-on]{opacity:1;transform:none;pointer-events:auto}
+@media (prefers-reduced-motion:reduce){.v3-site{transition:none}}
+/* mini sitios */
+.ms-nav{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:clamp(22px,4vw,44px)}
+.ms-nav b{font-size:16px}
+.ms-nav span{display:flex;gap:18px;opacity:.75}
+.ms-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(20px,4vw,48px);align-items:start}
+.ms-h{font-size:clamp(24px,3.4vw,44px);line-height:1.02;margin:0 0 14px;letter-spacing:-0.02em}
+.ms-p{font-size:14px;line-height:1.5;opacity:.8;margin:0 0 20px;max-width:36ch}
+.ms-btn{display:inline-flex;height:40px;align-items:center;padding:0 16px;border-radius:999px;font-size:14px;font-weight:600}
+.cafe{background:#2A1A12;color:#F2E4D2}
+.cafe .ms-h{font-family:Gloock,serif;font-weight:400}
+.cafe .ms-btn{background:#E8A15A;color:#2A1A12}
+.cafe-menu{background:#3A2619;border-radius:14px;padding:18px 20px;display:grid;gap:12px;font-size:14px}
+.cafe-menu div{display:flex;justify-content:space-between;border-bottom:1px dashed rgba(242,228,210,.2);padding-bottom:10px}
+.cafe-menu div:last-child{border:0;padding:0}
+.ferre{background:#16213B;color:#fff;font-family:"Bricolage Grotesque",sans-serif}
+.ferre .ms-h{font-weight:800}
+.ferre-search{display:flex;align-items:center;gap:10px;background:#fff;color:#4b5677;border-radius:12px;height:46px;padding:0 14px;font-size:14px;max-width:360px}
+.ferre-search svg{width:16px;height:16px}
+.ferre-cats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ferre-cats div{background:#22305A;border-radius:12px;padding:16px;font-size:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.ferre-cats div span{color:#FF8A3D;font-size:12px}
+.dental{background:#F4FBFA;color:#0F3A3A}
+.dental .ms-h{font-family:Figtree,sans-serif;font-weight:700}
+.dental .ms-btn{background:#13807A;color:#fff}
+.slots{background:#fff;border:1px solid #D7ECEA;border-radius:14px;padding:18px}
+.slots b{font-size:14px}
+.slots .days{display:flex;gap:8px;margin:12px 0}
+.slots .days span{flex:1;text-align:center;padding:8px 0;border-radius:10px;background:#EEF7F6;font-size:12px;line-height:1.3}
+.slots .days span.on{background:#13807A;color:#fff}
+.slots .times{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.slots .times span{text-align:center;padding:9px 0;border-radius:10px;border:1px solid #D7ECEA;font-size:13px}
+.slots .times span.off{opacity:.35;text-decoration:line-through}
+.slots .times span.on{border-color:#13807A;color:#13807A;font-weight:700}
+.sys{background:#FAFAF7;color:#17190F;display:grid;grid-template-columns:180px 1fr;gap:0;padding:0!important}
+.sys-side{background:#17190F;color:#E9EBE2;padding:22px 18px;font-size:13px;display:grid;align-content:start;gap:6px}
+.sys-side b{font-size:15px;margin-bottom:14px}
+.sys-side span{padding:8px 10px;border-radius:8px;opacity:.7}
+.sys-side span.on{background:#2C3020;opacity:1}
+.sys-main{padding:24px 28px;overflow:hidden}
+.sys-main h4{margin:0 0 16px;font-size:20px;letter-spacing:-0.01em}
+.sys-main table{width:100%;border-collapse:collapse;font-size:13px}
+.sys-main th{text-align:left;color:#6b705c;font-weight:500;padding:0 8px 10px;border-bottom:1px solid #E2E4D8}
+.sys-main td{padding:11px 8px;border-bottom:1px solid #EEEFE8;white-space:nowrap}
+.stock{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:600}
+.s-ok{background:#E6EED3;color:#3C481D}.s-low{background:#FCE9D9;color:#A0471B}
+@media (max-width:860px){.v3-nav{grid-template-columns:1fr auto}.v3-links{display:none}.ms-grid{grid-template-columns:1fr}.ms-grid>:last-child{display:none}.sys{grid-template-columns:1fr}.sys-side{display:none}.v3-hero{padding-top:40px}}
+@media (max-width:520px){.v3-url{display:none}.ms-nav span{display:none}.sys-main .opt{display:none}}
+
+/* Motion reducido */
+@media (prefers-reduced-motion:reduce){
+  .v2-sign,.v3-browser{animation:none}
+  .v2-msg,.v2-sys{animation:none;opacity:1;transform:none}
+}
+
+/* ============ Picker (verbatim de prototype/PICKER.md) ============ */
+.proto-picker{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:2147483647;display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:rgba(10,10,10,0.82);-webkit-backdrop-filter:blur(12px) saturate(1.4);backdrop-filter:blur(12px) saturate(1.4);box-shadow:0 0 0 1px rgba(255,255,255,0.08) inset,0 8px 24px rgba(0,0,0,0.24),0 2px 6px rgba(0,0,0,0.12);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:13px;line-height:1;-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none}
+.proto-picker-highlight{position:absolute;top:4px;left:0;height:28px;border-radius:999px;background:rgba(255,255,255,0.12)}
+.proto-picker[data-ready] .proto-picker-highlight{transition:transform 250ms cubic-bezier(0.23,1,0.32,1),width 250ms cubic-bezier(0.23,1,0.32,1)}
+@media (prefers-reduced-motion:reduce){.proto-picker[data-ready] .proto-picker-highlight{transition:none}}
+.proto-picker-item{position:relative;display:flex;align-items:center;height:28px;padding:0 12px;border:0;border-radius:999px;background:transparent;color:rgba(255,255,255,0.55);font:inherit;cursor:pointer;transition:color 150ms ease-out,transform 160ms cubic-bezier(0.23,1,0.32,1)}
+@media (hover:hover) and (pointer:fine){.proto-picker-item:hover{color:rgba(255,255,255,0.85)}}
+.proto-picker-item:active{transform:scale(0.97)}
+.proto-picker-item:focus-visible{outline:2px solid rgba(255,255,255,0.4);outline-offset:2px}
+.proto-picker-item[data-active]{color:#fff}
+.proto-picker-divider{width:1px;height:16px;margin:0 4px;background:rgba(255,255,255,0.12)}
+.proto-picker-replay{padding:0 10px;font-size:14px}
+.proto-picker[data-position="top"]{bottom:auto;top:24px}
+</style>
+</head>
+<body>
+<main id="stage"></main>
+
+<nav class="proto-picker" aria-label="Prototype variants">
+  <span class="proto-picker-highlight" aria-hidden="true"></span>
+  <button class="proto-picker-item" data-active aria-current="true">Cuaderno</button>
+  <button class="proto-picker-item">Rótulo</button>
+  <button class="proto-picker-item">Vitrina</button>
+  <span class="proto-picker-divider" aria-hidden="true"></span>
+  <button class="proto-picker-item proto-picker-replay" aria-label="Replay animation (R)">↻</button>
+</nav>
+
+<script>
+/* ---------- Datos a reemplazar ---------- */
+const BRAND = 'Estudio Brío';                 // nombre temporal
+const EMAIL = 'hola@tuestudio.com';           // correo de ejemplo
+const WA_TEXT = 'Hola, me interesa una página o sistema para mi negocio.';
+const WA = 'https://wa.me/?text=' + encodeURIComponent(WA_TEXT); // agregar número: https://wa.me/502XXXXXXXX?text=...
+
+/* ---------- Íconos (SVG propios, trazo 1.8) ---------- */
+const I = {
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 19.5l1.2-3.6A7.5 7.5 0 1 1 8.4 18.6z"/><path d="M9.2 9.6c.2 1.9 1.8 3.8 3.9 4.6l1.2-1.1 1.8.9-.4 1.6c-3.6.2-7.3-3.3-7.4-6.9l1.5-.5.9 1.8z" fill="currentColor" stroke="none"/></svg>',
+  mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg>',
+  page:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M7 13h6M7 16h4"/></svg>',
+  sys:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="7" height="7" rx="2"/><rect x="14" y="4" width="7" height="7" rx="2"/><rect x="3" y="15" width="7" height="5" rx="2"/><path d="M14 17.5h7M17.5 14v7"/></svg>',
+  arrows:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5"/></svg>',
+  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>',
+  people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8.5" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5.2a3.5 3.5 0 0 1 0 6.6M18 14.2A6.5 6.5 0 0 1 21.5 20"/></svg>',
+};
+
+/* ---------- Secciones compartidas (qué hacemos + contacto) ---------- */
+function below(){
+  return `
+  <section class="below" id="que-hacemos">
+    <div class="wrap">
+      <h2>Dos formas de ayudarte a crecer</h2>
+      <p class="lead">Empezamos por entender cómo funciona tu negocio hoy. Después hacemos lo que de verdad necesitas: una página para que te encuentren, un sistema para ordenarte, o las dos cosas.</p>
+      <div class="services">
+        <div class="service">
+          <div class="ico">${I.page}</div>
+          <h3>Landing pages</h3>
+          <p>Una página clara que explica qué vendes, por qué elegirte y cómo contactarte.</p>
+          <ul><li>Diseño a la medida de tu marca</li><li>Botón directo a WhatsApp y formulario</li><li>Se ve bien en el celular</li></ul>
+        </div>
+        <div class="service">
+          <div class="ico">${I.sys}</div>
+          <h3>Sistemas a la medida</h3>
+          <p>Herramientas para dejar el cuaderno y las hojas sueltas: todo en un solo lugar.</p>
+          <ul><li>Pedidos, reservas o citas</li><li>Inventario y clientes</li><li>Reportes sencillos de tu negocio</li></ul>
+        </div>
+      </div>
+
+      <div class="contact" id="contacto">
+        <div>
+          <h2>Cuéntanos de tu negocio</h2>
+          <p class="lead">Escríbenos por donde te quede más cómodo. Te respondemos con preguntas concretas, no con una propuesta genérica.</p>
+          <div class="contact-ways">
+            <a class="btn btn-s" href="${WA}" target="_blank" rel="noopener">${I.chat}Escribir por WhatsApp</a>
+            <a class="btn btn-s-ghost" href="mailto:${EMAIL}">${I.mail}${EMAIL}</a>
+          </div>
+        </div>
+        <form class="form" novalidate>
+          <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" name="name" autocomplete="name" required><span class="err">Escribe tu nombre.</span></div>
+          <div class="field"><label for="f-biz">Tu negocio</label><input id="f-biz" name="biz" placeholder="Ej. Panadería La Espiga" required><span class="err">¿Cómo se llama tu negocio?</span></div>
+          <div class="field full"><label for="f-need">¿Qué necesitas?</label>
+            <select id="f-need" name="need" required><option value="">Elige una opción</option><option>Una landing page</option><option>Un sistema</option><option>Las dos cosas</option><option>Todavía no sé, quiero asesoría</option></select>
+            <span class="err">Elige una opción.</span></div>
+          <div class="field full"><label for="f-contact">WhatsApp o correo</label><input id="f-contact" name="contact" placeholder="Para poder responderte" required><span class="err">Déjanos un WhatsApp o correo para responderte.</span></div>
+          <div class="field full"><label for="f-msg">Cuéntanos un poco <span style="font-weight:400;opacity:.7">(opcional)</span></label><textarea id="f-msg" name="msg" placeholder="Qué vendes, qué te gustaría mejorar…"></textarea></div>
+          <div class="actions"><button class="btn btn-s" type="submit">Enviar mensaje</button><span class="note">Prototipo: este formulario todavía no envía nada.</span></div>
+          <div class="form-done" role="status">¡Gracias! Recibimos tu mensaje y te escribimos pronto. <br><small>(En el prototipo no se envió nada.)</small></div>
+        </form>
+      </div>
+    </div>
+  </section>`;
+}
+
+/* ---------- Variante 1 · Cuaderno ---------- */
+function v1(){
+  return `
+  <div class="v1">
+    <div class="wrap">
+      <header class="v1-nav">
+        <a class="v1-brand" href="#">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="9" fill="#2B50D8"/><path d="M10 21.5c3-1 5-4 6-8 1 4 3 7 6 8" fill="none" stroke="#D9F24F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          ${BRAND}
+        </a>
+        <nav class="v1-links" aria-label="Principal">
+          <a href="#que-hacemos">Qué hacemos</a>
+          <a href="#contacto">Contacto</a>
+          <a class="btn" href="${WA}" target="_blank" rel="noopener">${I.chat}WhatsApp</a>
+        </nav>
+      </header>
+      <section class="v1-hero">
+        <div>
+          <h1>Tu negocio creció.<br><mark>Tu cuaderno, no.</mark></h1>
+          <p class="v1-sub">Hacemos landing pages y sistemas a la medida para negocios en crecimiento: que más clientes te encuentren y que ningún pedido se pierda en el chat.</p>
+          <div class="v1-ctas">
+            <a class="btn" href="${WA}" target="_blank" rel="noopener">${I.chat}Escríbenos por WhatsApp</a>
+            <a class="link" href="#contacto">o déjanos tus datos</a>
+          </div>
+          <div class="v1-what">
+            <span>${I.page}Landing pages</span>
+            <span>${I.sys}Sistemas a la medida</span>
+          </div>
+        </div>
+        <div>
+          <div class="v1-compare" style="--pos:100%">
+            <div class="v1-layer v1-sys" aria-label="Después: pedidos organizados en un sistema">
+              <div class="v1-sys-top"><b>Pedidos de la semana</b><small>4 pedidos · 1 por cobrar</small></div>
+              <table class="v1-table">
+                <thead><tr><th>Cliente</th><th>Pedido</th><th class="opt">Entrega</th><th>Estado</th></tr></thead>
+                <tbody>
+                  <tr><td>Marta R.</td><td>Pastel tres leches</td><td class="opt">Lun 12</td><td><span class="v1-chip c-ok">Pagado</span></td></tr>
+                  <tr><td>Luis M.</td><td>40 tamales</td><td class="opt">Vie 16</td><td><span class="v1-chip c-wait">Anticipo</span></td></tr>
+                  <tr><td>Ana P.</td><td>2 pasteles</td><td class="opt">Sáb 17</td><td><span class="v1-chip c-move">Cambió fecha</span></td></tr>
+                  <tr><td>Rosa G.</td><td>1 pastel</td><td class="opt">Sáb 17</td><td><span class="v1-chip c-due">Por cobrar</span></td></tr>
+                </tbody>
+              </table>
+              <div class="v1-remind">${I.bell}<div><b>Pedir harina al proveedor</b><br><span>Recordatorio · Martes 13, 9:00</span></div></div>
+            </div>
+            <div class="v1-layer v1-note" aria-label="Antes: pedidos anotados a mano en un cuaderno">
+              <p class="h">Pedidos — lunes 12</p>
+              <p>Doña Marta · pastel 3 leches · <span class="red">¿pagó??</span></p>
+              <p class="tilt">Luis (el del taller) · 40 tamales · vie</p>
+              <p><s>Ana · 2 pasteles · jueves</s> → sábado</p>
+              <p class="tilt"><span class="circle">llamar proveedor harina!!<svg viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path d="M3 17C4 6 40 2 70 4s30 9 26 16-40 9-66 7S1 25 6 12" fill="none" stroke="#C8372D" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg></span></p>
+              <p>Sra. Rosa · 1 pastel · ¿anticipo? preguntar</p>
+              <p class="tilt" style="opacity:.75">ver lo de Ana otra vez...</p>
+            </div>
+            <span class="v1-tag l">Antes</span>
+            <span class="v1-tag r">Después</span>
+            <span class="v1-demo">Ejemplo ilustrativo</span>
+            <input class="v1-range" type="range" min="0" max="100" value="100" aria-label="Comparar antes y después">
+            <div class="v1-handle"><div class="v1-knob">${I.arrows}</div></div>
+          </div>
+          <p class="v1-hint">Arrastra para ver el cambio</p>
+        </div>
+      </section>
+    </div>
+    ${below()}
+  </div>`;
+}
+function initV1(root){
+  const cmp = root.querySelector('.v1-compare');
+  const range = root.querySelector('.v1-range');
+  let raf, touched = false;
+  const set = v => { cmp.style.setProperty('--pos', v + '%'); range.value = v; };
+  range.addEventListener('input', () => { touched = true; cancelAnimationFrame(raf); set(range.value); });
+  // Momento de entrada: el cuaderno se "abre" y revela el sistema (ease-out exponencial).
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce){ set(52); return () => {}; }
+  const from = 100, to = 52, dur = 1100, start = performance.now() + 350;
+  const ease = t => 1 - Math.pow(2, -10 * t);
+  const tick = now => {
+    if (touched) return;
+    const t = Math.min(1, Math.max(0, (now - start) / dur));
+    set(from + (to - from) * ease(t));
+    if (t < 1) raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
+  return () => cancelAnimationFrame(raf);
+}
+
+/* ---------- Variante 2 · Rótulo ---------- */
+function v2(){
+  return `
+  <div class="v2">
+    <div class="wrap">
+      <header class="v2-nav">
+        <a class="v2-brand" href="#">${BRAND}</a>
+        <nav class="v2-links" aria-label="Principal">
+          <a href="#que-hacemos">Qué hacemos</a>
+          <a href="#contacto">Contacto</a>
+          <a class="btn" href="${WA}" target="_blank" rel="noopener">${I.chat}WhatsApp</a>
+        </nav>
+      </header>
+      <section class="v2-hero">
+        <div>
+          <h1><span>Que te encuentren.</span><span>Que te escriban.</span><span class="t">Que vuelvan.</span></h1>
+          <p class="v2-sub">Hacemos la página y el sistema que tu negocio necesita para crecer. A tu medida, a tu ritmo y sin tecnicismos.</p>
+          <div class="v2-ctas">
+            <a class="btn" href="${WA}" target="_blank" rel="noopener">${I.chat}Escríbenos por WhatsApp</a>
+            <a class="link" href="#contacto">Prefiero dejar mis datos</a>
+          </div>
+        </div>
+        <div class="v2-side">
+          <div class="v2-sign" aria-hidden="true"><div class="v2-board"><b>ABIERTO</b><small>también en internet</small></div></div>
+          <div class="v2-chat" aria-label="Ejemplo de conversación con un cliente">
+            <div class="v2-chat-top"><div class="v2-ava">E</div><div><b>Panadería La Espiga</b><small>en línea</small></div><span class="demo">Ejemplo</span></div>
+            <div class="v2-msgs">
+              <div class="v2-msg in" style="animation-delay:700ms">Hola, ¿tienen pastel para el sábado?</div>
+              <div class="v2-msg out" style="animation-delay:1300ms">¡Hola! Sí. Aquí ves sabores y tamaños, y lo apartas:
+                <span class="lnk"><b>tunegocio.com/pedidos</b>Elige sabor, tamaño y hora de entrega</span></div>
+              <div class="v2-msg in" style="animation-delay:2100ms">Listo, ya lo aparté.</div>
+              <div class="v2-sys" style="animation-delay:2600ms">${I.check}Pedido registrado · sáb 10:00</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="v2-strip">
+        <span>${I.page}Landing pages</span>
+        <span>${I.sys}Sistemas a la medida</span>
+        <span>${I.people}Para negocios en crecimiento</span>
+      </div>
+    </div>
+    ${below()}
+  </div>`;
+}
+
+/* ---------- Variante 3 · Vitrina ---------- */
+const SITES = [
+  { tab:'Cafetería', url:'cafeelportal.ejemplo', html:`
+    <div class="v3-site cafe">
+      <div class="ms-nav"><b>Café El Portal</b><span>Menú · Ubicación · Pedidos</span></div>
+      <div class="ms-grid">
+        <div><h3 class="ms-h">Café de altura, tostado aquí mismo.</h3><p class="ms-p">Pide para llevar desde tu celular y pasa por él sin hacer fila.</p><span class="ms-btn">Ver el menú</span></div>
+        <div class="cafe-menu"><div><span>Americano</span><span>Q18</span></div><div><span>Capuchino</span><span>Q24</span></div><div><span>Pan de banano</span><span>Q15</span></div><div><span>Desayuno chapín</span><span>Q45</span></div></div>
+      </div>
+    </div>`},
+  { tab:'Ferretería', url:'ferreteriadonbeto.ejemplo', html:`
+    <div class="v3-site ferre">
+      <div class="ms-nav"><b>Ferretería Don Beto</b><span>Productos · Cotizar · Envíos</span></div>
+      <div class="ms-grid">
+        <div><h3 class="ms-h">Todo para tu obra, con entrega a domicilio.</h3><p class="ms-p">Busca lo que necesitas y pide tu cotización por WhatsApp.</p><div class="ferre-search">${I.search}Busca cemento, tubería, pintura…</div></div>
+        <div class="ferre-cats"><div>Construcción<span>Ver</span></div><div>Plomería<span>Ver</span></div><div>Electricidad<span>Ver</span></div><div>Pintura<span>Ver</span></div></div>
+      </div>
+    </div>`},
+  { tab:'Clínica dental', url:'clinicasonrie.ejemplo', html:`
+    <div class="v3-site dental">
+      <div class="ms-nav"><b>Clínica Sonríe</b><span>Tratamientos · Equipo · Citas</span></div>
+      <div class="ms-grid">
+        <div><h3 class="ms-h">Agenda tu cita en un minuto.</h3><p class="ms-p">Elige día y hora disponibles. Te confirmamos por WhatsApp.</p><span class="ms-btn">Agendar cita</span></div>
+        <div class="slots"><b>Limpieza dental</b>
+          <div class="days"><span>Lun<br>12</span><span class="on">Mar<br>13</span><span>Mié<br>14</span><span>Jue<br>15</span></div>
+          <div class="times"><span class="off">8:00</span><span>9:30</span><span class="on">11:00</span><span>14:00</span><span class="off">15:30</span><span>17:00</span></div>
+        </div>
+      </div>
+    </div>`},
+  { tab:'Sistema de inventario', url:'app.ferreteriadonbeto.ejemplo', html:`
+    <div class="v3-site sys">
+      <div class="sys-side"><b>Don Beto · Admin</b><span>Pedidos</span><span class="on">Inventario</span><span>Clientes</span><span>Reportes</span></div>
+      <div class="sys-main"><h4>Inventario</h4>
+        <table><thead><tr><th>Producto</th><th class="opt">Categoría</th><th>Existencia</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr><td>Cemento 42.5 kg</td><td class="opt">Construcción</td><td>86 sacos</td><td><span class="stock s-ok">Suficiente</span></td></tr>
+          <tr><td>Tubo PVC 1/2"</td><td class="opt">Plomería</td><td>12 unidades</td><td><span class="stock s-low">Pedir pronto</span></td></tr>
+          <tr><td>Pintura blanca galón</td><td class="opt">Pintura</td><td>34 galones</td><td><span class="stock s-ok">Suficiente</span></td></tr>
+          <tr><td>Cable THHN #12</td><td class="opt">Electricidad</td><td>3 rollos</td><td><span class="stock s-low">Pedir pronto</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>`},
+];
+function v3(){
+  return `
+  <div class="v3">
+    <div class="wrap">
+      <header class="v3-nav">
+        <a class="v3-brand" href="#">${BRAND}</a>
+        <nav class="v3-links" aria-label="Principal"><a href="#que-hacemos">Qué hacemos</a><a href="#contacto">Contacto</a></nav>
+        <a class="btn" href="${WA}" target="_blank" rel="noopener">${I.chat}Hablemos</a>
+      </header>
+      <section class="v3-hero">
+        <h1>Tu negocio, bien presentado y mejor organizado.</h1>
+        <p class="v3-sub">Diseñamos landing pages y sistemas a la medida para negocios que están creciendo. Tú nos cuentas cómo trabajas; nosotros lo convertimos en algo que funciona.</p>
+        <div class="v3-ctas">
+          <a class="btn" href="${WA}" target="_blank" rel="noopener">${I.chat}Escríbenos por WhatsApp</a>
+          <a class="btn ghost" href="#contacto">Dejar mis datos</a>
+        </div>
+        <div class="v3-tabs" role="tablist" aria-label="Ejemplos de proyectos">
+          ${SITES.map((s,i)=>`<button class="v3-tab" role="tab" aria-selected="${i===0}" data-i="${i}">${s.tab}</button>`).join('')}
+        </div>
+        <div class="v3-browser">
+          <div class="v3-bar"><div class="v3-dots"><i></i><i></i><i></i></div><div class="v3-url">${I.lock}<span class="v3-url-t">${SITES[0].url}</span></div><span class="v3-demo">Ejemplo</span></div>
+          <div class="v3-screen" role="tabpanel">${SITES.map(s=>s.html).join('')}</div>
+        </div>
+      </section>
+    </div>
+    ${below()}
+  </div>`;
+}
+function initV3(root){
+  const tabs = [...root.querySelectorAll('.v3-tab')];
+  const sites = [...root.querySelectorAll('.v3-site')];
+  const url = root.querySelector('.v3-url-t');
+  let i = 0, timer;
+  const show = n => {
+    i = n;
+    tabs.forEach((t,j)=>t.setAttribute('aria-selected', j===n));
+    sites.forEach((s,j)=>s.toggleAttribute('data-on', j===n));
+    url.textContent = SITES[n].url;
+  };
+  show(0);
+  const stop = () => clearInterval(timer);
+  tabs.forEach((t,j)=>t.addEventListener('click', ()=>{ stop(); show(j); }));
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    timer = setInterval(()=>show((i+1)%SITES.length), 4500);
+  }
+  root.querySelector('.v3-browser').addEventListener('pointerenter', stop);
+  return stop;
+}
+
+/* ---------- Formulario (validación + estado enviado) ---------- */
+function initForm(root){
+  const form = root.querySelector('.form');
+  if (!form) return;
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let first = null;
+    form.querySelectorAll('[required]').forEach(el => {
+      const bad = !el.value.trim();
+      el.closest('.field').toggleAttribute('data-error', bad);
+      el.setAttribute('aria-invalid', bad);
+      if (bad && !first) first = el;
+    });
+    if (first){ first.focus(); return; }
+    form.setAttribute('data-sent','');
+  });
+  form.addEventListener('input', e => {
+    const f = e.target.closest('.field');
+    if (f && e.target.value.trim()) { f.removeAttribute('data-error'); e.target.removeAttribute('aria-invalid'); }
+  });
+}
+
+/* ---------- Harness (wiring de PICKER.md, con init por variante) ---------- */
+const variants = [v1, v2, v3];
+const inits = [initV1, () => () => {}, initV3];
+let cleanup = () => {};
+
+const stage = document.getElementById('stage');
+const picker = document.querySelector('.proto-picker');
+const highlight = picker.querySelector('.proto-picker-highlight');
+const items = [...picker.querySelectorAll('.proto-picker-item:not(.proto-picker-replay)')];
+const replay = picker.querySelector('.proto-picker-replay');
+let current = 0;
+
+function moveHighlight() {
+  const el = items[current];
+  highlight.style.width = el.offsetWidth + 'px';
+  highlight.style.transform = `translateX(${el.offsetLeft}px)`;
+}
+
+function mount(i) {
+  cleanup();
+  stage.innerHTML = '';
+  requestAnimationFrame(() => {
+    stage.innerHTML = variants[i]();
+    cleanup = inits[i](stage) || (() => {});
+    initForm(stage);
+  });
+}
+
+function setActive(i) {
+  if (i < 0 || i >= variants.length) return;
+  current = i;
+  items.forEach((el, j) => {
+    el.toggleAttribute('data-active', j === i);
+    if (j === i) el.setAttribute('aria-current', 'true');
+    else el.removeAttribute('aria-current');
+  });
+  moveHighlight();
+  const url = new URL(location);
+  url.searchParams.set('v', i + 1);
+  history.replaceState(null, '', url);
+  mount(i);
+}
+
+items.forEach((el, i) => el.addEventListener('click', () => setActive(i)));
+replay?.addEventListener('click', () => mount(current));
+window.addEventListener('resize', moveHighlight);
+
+document.addEventListener('keydown', (e) => {
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const num = parseInt(e.key, 10);
+  if (num >= 1 && num <= variants.length) setActive(num - 1);
+  else if (e.key === 'ArrowRight') setActive((current + 1) % variants.length);
+  else if (e.key === 'ArrowLeft') setActive((current - 1 + variants.length) % variants.length);
+  else if (e.key === 'r' || e.key === 'R') mount(current);
+});
+
+const requested = parseInt(new URLSearchParams(location.search).get('v'), 10);
+setActive(requested >= 1 && requested <= variants.length ? requested - 1 : 0);
+requestAnimationFrame(() => requestAnimationFrame(() => picker.setAttribute('data-ready', '')));
+</script>
+</body>
+</html>

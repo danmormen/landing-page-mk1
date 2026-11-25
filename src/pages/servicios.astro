@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Steps from '../components/Steps.astro';
+import BrowserFrame from '../components/BrowserFrame.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { BRAND, STEPS } from '../data/site';
+import { byKey } from '../data/projects';
+
+const services = [
+  {
+    id: 'landing', key: 'landing', title: 'Landing pages', project: byKey('cafe'), cta: 'Quiero una landing page',
+    lead: 'Una sola página pensada para que quien llegue entienda qué ofreces y te contacte.',
+    items: ['Diseño a la medida de tu marca', 'Textos claros que explican tu oferta', 'Botón directo a WhatsApp y formulario de contacto', 'Se adapta a celular, tablet y computadora', 'Estructura básica para aparecer en buscadores'],
+    ideal: 'estás empezando a vender en línea, lanzas un producto o servicio, o hoy solo tienes redes sociales.',
+  },
+  {
+    id: 'sitios', key: 'sitio', title: 'Sitios web completos', project: byKey('ferre'), cta: 'Quiero un sitio web',
+    lead: 'Varias páginas para contar todo sobre tu negocio y que se vea establecido y confiable.',
+    items: ['Las secciones que tu negocio necesita: inicio, servicios, nosotros, contacto…', 'Catálogo o menú de productos', 'Blog o sección de noticias', 'Mapa, horarios y formas de contacto', 'Diseño consistente en todas las páginas'],
+    ideal: 'tienes varios servicios o productos que explicar, o quieres que tu negocio se vea más profesional.',
+  },
+  {
+    id: 'sistemas', key: 'sistema', title: 'Sistemas a la medida', project: byKey('inv'), cta: 'Quiero un sistema',
+    lead: 'Herramientas hechas para cómo trabaja tu negocio: adiós al cuaderno, las hojas sueltas y los pedidos perdidos en el chat.',
+    items: ['Pedidos y reservas', 'Citas y agenda', 'Inventario con avisos', 'Clientes y su historial', 'Reportes sencillos para tomar decisiones'],
+    ideal: 'pierdes tiempo anotando a mano, se te olvidan pedidos o no sabes con certeza cuánto tienes en bodega.',
+  },
+];
+
+const guide = [
+  ['Quiero que me encuentren y me escriban', 'Landing page'],
+  ['Quiero mostrar todo lo que ofrece mi negocio', 'Sitio web completo'],
+  ['Quiero dejar de anotar pedidos a mano', 'Sistema a la medida'],
+  ['Quiero conseguir más clientes y organizarme mejor', 'Sitio web + sistema'],
+];
+
+const faqs = [
+  ['¿Cuánto cuesta?', 'Depende de lo que necesites. Después de una primera conversación te enviamos una cotización clara, con lo que incluye y lo que no, para que decidas con calma.'],
+  ['¿Cuánto tiempo tarda?', 'Depende del tamaño del proyecto. Al cotizar te damos un calendario con las entregas, para que sepas qué esperar en cada etapa.'],
+  ['¿Necesito tener logo y textos?', 'No es necesario. Si ya los tienes, los usamos; si no, te ayudamos a definir lo básico para empezar.'],
+  ['¿Puedo empezar con una landing y crecer después?', 'Sí. Muchos negocios empiezan con una landing page y después suman más páginas o un sistema. Lo planeamos desde el inicio para que pueda crecer.'],
+  ['¿Se verá bien en el celular?', 'Sí. Todo lo que hacemos se diseña para verse y funcionar bien en celular, tablet y computadora.'],
+];
+---
+<Base title={`Servicios · ${BRAND}`} description="Landing pages, sitios web completos y sistemas a la medida para negocios en crecimiento.">
+  <section class="page-hero">
+    <div class="wrap">
+      <h1 class="display" data-hero="lead">Lo que hacemos por tu negocio</h1>
+      <p class="lead" data-hero="sub">Tres servicios que se pueden combinar. Empezamos por lo que más te ayuda hoy y dejamos todo listo para crecer después.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      {services.map((s, i) => (
+        <div class:list={['service-row', { flip: i % 2 === 1 }]} id={s.id}>
+          <div class="service-copy" data-reveal>
+            <h2 class="h2">{s.title}</h2>
+            <p class="lead">{s.lead}</p>
+            <ul class="checklist">
+              {s.items.map((item) => <li><Icon name="check" /><span>{item}</span></li>)}
+            </ul>
+            <p class="ideal"><b>Ideal si…</b> {s.ideal}</p>
+            <a class="btn btn-primary" href={`/contacto?servicio=${s.key}#formulario`}>{s.cta}</a>
+          </div>
+          <div data-reveal style="--d:120ms"><BrowserFrame project={s.project} /></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section on-white">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="h2" data-reveal>¿No sabes cuál necesitas?</h2>
+        <p class="lead" data-reveal style="--d:90ms">Empieza por lo que quieres lograr. Si sigues con dudas, escríbenos y lo vemos juntos.</p>
+      </div>
+      <div class="guide" data-stagger>
+        {guide.map(([want, answer]) => (
+          <div class="guide-row" data-reveal><p>«{want}»</p><Icon name="arrow" /><b>{answer}</b></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="h2" data-reveal>Cómo trabajamos</h2>
+        <p class="lead" data-reveal style="--d:90ms">Cuatro pasos, siempre con tu opinión en el centro.</p>
+      </div>
+      <Steps items={STEPS} />
+    </div>
+  </section>
+
+  <section class="section on-white">
+    <div class="wrap">
+      <div class="section-head stack"><h2 class="h2" data-reveal>Preguntas frecuentes</h2></div>
+      <div class="faq" data-reveal>
+        {faqs.map(([q, a], i) => (
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false" aria-controls={`faq-${i}`} id={`faq-q-${i}`}>{q}<Icon name="plus" /></button>
+            <div class="faq-a" id={`faq-${i}`} role="region" aria-labelledby={`faq-q-${i}`}><div><p>{a}</p></div></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="¿Empezamos?" text="Escríbenos y cuéntanos qué te gustaría lograr. Te ayudamos a elegir lo que más le conviene a tu negocio." />
+</Base>

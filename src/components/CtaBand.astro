@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro';
+interface Props { title?: string; text?: string }
+const {
+  title = '¿Hablamos de tu negocio?',
+  text = 'Cuéntanos qué vendes y qué te gustaría mejorar. Te respondemos con ideas concretas para empezar.',
+} = Astro.props;
+---
+<section class="section cta-section">
+  <div class="wrap">
+    <div class="cta-band" data-reveal>
+      <div><h2 class="h2">{title}</h2><p>{text}</p></div>
+      <div class="actions">
+        <a class="btn btn-light" data-wa href="/contacto"><Icon name="chat" />Escríbenos por WhatsApp</a>
+        <a class="btn btn-ghost" href="/contacto#formulario">Dejar mis datos</a>
+      </div>
+    </div>
+  </div>
+</section>

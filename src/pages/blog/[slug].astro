@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import PostRow from '../../components/PostRow.astro';
+import { BRAND } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, posts } }));
+}
+
+interface Props { post: CollectionEntry<'blog'>; posts: CollectionEntry<'blog'>[] }
+const { post, posts } = Astro.props;
+const { Content } = await render(post);
+const others = posts.filter((p) => p.id !== post.id).sort((a, b) => a.data.order - b.data.order).slice(0, 2);
+---
+<Base title={`${post.data.title} · ${BRAND}`} description={post.data.excerpt}>
+  <article class="article">
+    <div class="wrap">
+      <header class="article-head">
+        <a class="back" href="/blog"><Icon name="back" />Volver al blog</a>
+        <div class="post-meta" data-hero="deco"><span class="tag">{post.data.tag}</span><span>{post.data.minutes} min de lectura</span></div>
+        <h1 class="display" data-hero="lead">{post.data.title}</h1>
+        <p class="lead" data-hero="sub">{post.data.excerpt}</p>
+      </header>
+      <div class="prose" data-hero="stage" style="--rise:20px"><Content /></div>
+      <aside class="article-end" data-reveal>
+        <div><b>¿Quieres llevarlo a tu negocio?</b><p>Cuéntanos tu caso y te decimos por dónde empezar.</p></div>
+        <a class="btn btn-primary" data-wa href="/contacto"><Icon name="chat" />Escríbenos</a>
+      </aside>
+    </div>
+  </article>
+
+  {others.length > 0 && (
+    <section class="section on-white">
+      <div class="wrap">
+        <div class="section-head stack"><h2 class="h2" data-reveal>Sigue leyendo</h2></div>
+        <div class="post-list flush" data-stagger>
+          {others.map((p) => <PostRow post={p} />)}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>

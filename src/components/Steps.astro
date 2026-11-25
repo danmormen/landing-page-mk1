@@ -1,0 +1,7 @@
+---
+interface Props { items: { title: string; text: string }[]; variant?: 'steps' | 'next-steps' }
+const { items, variant = 'steps' } = Astro.props;
+---
+<ol class={variant} data-stagger>
+  {items.map((s) => <li class="step" data-reveal><h3>{s.title}</h3><p>{s.text}</p></li>)}
+</ol>

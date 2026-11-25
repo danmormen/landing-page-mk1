@@ -1,0 +1,11 @@
+---
+import MiniSite from './MiniSite.astro';
+import type { Project } from '../data/projects';
+interface Props { project: Project }
+const { project } = Astro.props;
+---
+<article class="project" data-type={project.types.join(' ')} data-reveal>
+  <div class="shot" aria-hidden="true"><div class="shot-canvas"><MiniSite site={project.key} /></div></div>
+  <div class="project-meta"><h3>{project.name}</h3>{project.concept && <span class="tag">Concepto</span>}</div>
+  <p><b>{project.kind}.</b> {project.desc}</p>
+</article>

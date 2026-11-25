@@ -1,0 +1,16 @@
+---
+// Marco de navegador con una captura escalada de un mini sitio.
+import Icon from './Icon.astro';
+import MiniSite from './MiniSite.astro';
+import type { Project } from '../data/projects';
+interface Props { project: Project }
+const { project } = Astro.props;
+---
+<div class="browser framed">
+  <div class="browser-bar">
+    <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="url"><Icon name="lock" /><span>{project.url}</span></div>
+    {project.concept && <span class="tag">Concepto</span>}
+  </div>
+  <div class="shot" aria-hidden="true"><div class="shot-canvas"><MiniSite site={project.key} /></div></div>
+</div>

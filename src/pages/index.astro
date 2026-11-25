@@ -1,0 +1,137 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import MiniSite from '../components/MiniSite.astro';
+import Steps from '../components/Steps.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PostRow from '../components/PostRow.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { BRAND, STEPS } from '../data/site';
+import { byKey } from '../data/projects';
+
+// Pestañas de la vitrina del hero
+const showcase = [
+  { label: 'Cafetería', project: byKey('cafe') },
+  { label: 'Ferretería', project: byKey('ferre') },
+  { label: 'Clínica dental', project: byKey('dental') },
+  { label: 'Sistema de inventario', project: byKey('inv') },
+];
+
+const offer = [
+  { icon: 'page', title: 'Landing pages', text: 'Una página clara que explica qué ofreces, por qué elegirte y cómo contactarte.', href: '/servicios#landing' },
+  { icon: 'site', title: 'Sitios web completos', text: 'Varias páginas para mostrar todo tu negocio: servicios, catálogo, ubicación y más.', href: '/servicios#sitios' },
+  { icon: 'sys', title: 'Sistemas a la medida', text: 'Pedidos, citas, inventario y clientes en un solo lugar, para dejar el cuaderno atrás.', href: '/servicios#sistemas' },
+] as const;
+
+const audience = ['Cafeterías y restaurantes', 'Ferreterías', 'Clínicas y consultorios', 'Talleres', 'Tiendas y boutiques', 'Panaderías', 'Salones de belleza', 'Servicios profesionales', 'Gimnasios', '…y muchos más'];
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+---
+<Base
+  title={`${BRAND} · Landing pages y sistemas para negocios en crecimiento`}
+  description="Diseñamos landing pages, sitios web y sistemas a la medida para negocios pequeños y medianos que están creciendo."
+>
+  <section class="hero">
+    <div class="wrap">
+      <h1 class="display" data-hero="lead">Tu negocio, bien presentado y mejor organizado.</h1>
+      <p class="lead" data-hero="sub">Diseñamos landing pages, sitios web y sistemas a la medida para negocios que están creciendo. Tú nos cuentas cómo trabajas; nosotros lo convertimos en algo que funciona.</p>
+      <div class="hero-ctas" data-hero="ctas">
+        <a class="btn btn-primary" data-wa href="/contacto"><Icon name="chat" />Escríbenos por WhatsApp</a>
+        <a class="btn btn-ghost" href="/servicios">Ver servicios</a>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Ejemplos de proyectos" data-hero="deco">
+        {showcase.map((s, i) => (
+          <button class="tab" role="tab" id={`tab-${s.project.key}`} aria-controls={`site-${s.project.key}`} aria-selected={i === 0 ? 'true' : 'false'} data-url={s.project.url}>{s.label}</button>
+        ))}
+      </div>
+      <div class="browser" data-hero="stage">
+        <div class="browser-bar">
+          <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="url"><Icon name="lock" /><span class="url-text">{showcase[0].project.url}</span></div>
+          <span class="tag">Concepto</span>
+        </div>
+        <div class="screen">
+          {showcase.map((s, i) => (
+            <MiniSite site={s.project.key} id={`site-${s.project.key}`} role="tabpanel" aria-labelledby={`tab-${s.project.key}`} data-on={i === 0 ? '' : undefined} />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-white">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="h2" data-reveal>Todo lo que tu negocio necesita para crecer en internet</h2>
+        <p class="lead" data-reveal style="--d:90ms">Hacemos tres cosas y las hacemos a la medida: no hay dos negocios iguales, así que no hay dos proyectos iguales.</p>
+      </div>
+      <div class="offer" data-stagger>
+        {offer.map((o) => (
+          <div class="offer-item" data-reveal>
+            <div class="ico"><Icon name={o.icon} /></div>
+            <h3 class="h3">{o.title}</h3>
+            <p>{o.text}</p>
+            <a class="arrow-link" href={o.href}>Ver más<Icon name="arrow" /></a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="h2" data-reveal>Así trabajamos contigo</h2>
+        <p class="lead" data-reveal style="--d:90ms">Sin tecnicismos y sin sorpresas: siempre sabes en qué paso vamos y qué sigue.</p>
+      </div>
+      <Steps items={STEPS} />
+    </div>
+  </section>
+
+  <section class="section on-white">
+    <div class="wrap who">
+      <div>
+        <h2 class="h2" data-reveal style="margin-bottom:20px">Para negocios que están creciendo</h2>
+        <p class="lead" data-reveal style="--d:90ms">Trabajamos con negocios pequeños y medianos que ya tienen clientes y quieren dar el siguiente paso: verse mejor, conseguir más contactos y dejar de hacer todo a mano.</p>
+      </div>
+      <div class="chips" data-stagger>
+        {audience.map((c) => <span class="chip" data-reveal="fade">{c}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="h2" data-reveal>Proyectos</h2>
+        <div class="head-aside" data-reveal style="--d:90ms">
+          <p class="lead">Conceptos que diseñamos para mostrar cómo resolvemos negocios distintos.</p>
+          <a class="arrow-link" href="/portafolio">Ver todo el portafolio<Icon name="arrow" /></a>
+        </div>
+      </div>
+      <div class="projects" data-stagger>
+        <ProjectCard project={byKey('cafe')} />
+        <ProjectCard project={byKey('dental')} />
+        <ProjectCard project={byKey('inv')} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-white">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="h2" data-reveal>Del blog</h2>
+        <div class="head-aside" data-reveal style="--d:90ms">
+          <p class="lead">Ideas prácticas para que tu negocio crezca en internet.</p>
+          <a class="arrow-link" href="/blog">Ver todos los artículos<Icon name="arrow" /></a>
+        </div>
+      </div>
+      <div class="post-list flush" data-stagger>
+        {posts.map((post) => <PostRow post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

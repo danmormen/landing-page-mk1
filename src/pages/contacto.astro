@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Steps from '../components/Steps.astro';
+import { BRAND } from '../data/site';
+
+const next = [
+  { title: 'Te respondemos', text: 'Te escribimos con algunas preguntas sobre tu negocio y lo que te gustaría lograr.' },
+  { title: 'Conversamos', text: 'Una llamada corta para entender qué necesitas y resolver tus dudas.' },
+  { title: 'Te enviamos una propuesta', text: 'Con alcance, tiempos y costo claros, para que decidas con calma.' },
+];
+---
+<Base title={`Contacto · ${BRAND}`} description="Escríbenos por WhatsApp, correo o déjanos tus datos. Cuéntanos de tu negocio.">
+  <section class="page-hero">
+    <div class="wrap contact">
+      <div>
+        <h1 class="display" data-hero="lead">Cuéntanos de tu negocio</h1>
+        <p class="lead" data-hero="sub">Escríbenos por donde te quede más cómodo. Te respondemos con preguntas concretas, no con una propuesta genérica.</p>
+        <div class="ways" data-hero="ctas">
+          <a class="way" data-wa href="#formulario">
+            <span class="ico"><Icon name="chat" /></span>
+            <span><b>WhatsApp</b><span>La forma más rápida de hablar con nosotros</span></span>
+            <Icon name="arrow" class="go" />
+          </a>
+          <a class="way" data-email href="#formulario">
+            <span class="ico"><Icon name="mail" /></span>
+            <span><b>Correo</b><span class="email-text">hola@tuestudio.com</span></span>
+            <Icon name="arrow" class="go" />
+          </a>
+        </div>
+      </div>
+
+      <!-- TODO: conectar a un servicio de formularios (Netlify Forms, Formspree…). Hoy no envía nada. -->
+      <form class="form" id="formulario" novalidate data-hero="stage" aria-label="Formulario de contacto">
+        <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" name="name" autocomplete="name" required /><span class="err">Escribe tu nombre.</span></div>
+        <div class="field"><label for="f-biz">Tu negocio</label><input id="f-biz" name="biz" autocomplete="organization" placeholder="Ej. Panadería La Espiga" required /><span class="err">¿Cómo se llama tu negocio?</span></div>
+        <div class="field full">
+          <label for="f-need">¿Qué necesitas?</label>
+          <select id="f-need" name="need" required>
+            <option value="">Elige una opción</option>
+            <option data-key="landing">Una landing page</option>
+            <option data-key="sitio">Un sitio web completo</option>
+            <option data-key="sistema">Un sistema a la medida</option>
+            <option data-key="varios">Más de una cosa</option>
+            <option data-key="asesoria">Todavía no sé, quiero asesoría</option>
+          </select>
+          <span class="err">Elige una opción.</span>
+        </div>
+        <div class="field full"><label for="f-contact">WhatsApp o correo</label><input id="f-contact" name="contact" placeholder="Para poder responderte" required /><span class="err">Déjanos un WhatsApp o correo para responderte.</span></div>
+        <div class="field full"><label for="f-msg">Cuéntanos un poco <span class="opt">(opcional)</span></label><textarea id="f-msg" name="msg" placeholder="Qué vendes, a quién, qué te gustaría mejorar…"></textarea></div>
+        <div class="actions"><button class="btn btn-primary" type="submit">Enviar mensaje</button><span class="small">Te respondemos lo antes posible.</span></div>
+        <div class="form-done" role="status" tabindex="-1"><b>¡Gracias por escribirnos!</b>Recibimos tu mensaje. Te contactaremos pronto por el medio que nos dejaste.</div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section on-white">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="h2" data-reveal>Qué pasa después de escribirnos</h2>
+        <p class="lead" data-reveal style="--d:90ms">Sin compromiso: primero entendemos tu negocio, después te proponemos algo.</p>
+      </div>
+      <Steps items={next} variant="next-steps" />
+    </div>
+  </section>
+</Base>

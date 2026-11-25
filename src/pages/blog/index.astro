@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import PostRow from '../../components/PostRow.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { BRAND } from '../../data/site';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
+const [featured, ...rest] = posts;
+---
+<Base title={`Blog · ${BRAND}`} description="Ideas prácticas para que tu negocio crezca en internet, sin tecnicismos.">
+  <section class="page-hero">
+    <div class="wrap">
+      <h1 class="display" data-hero="lead">Blog</h1>
+      <p class="lead" data-hero="sub">Ideas prácticas para que tu negocio crezca en internet, explicadas sin tecnicismos.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      {featured && (
+        <a class="post-feature" href={`/blog/${featured.id}`} data-hero="stage">
+          <div class={`cover cover-${featured.data.cover}`} aria-hidden="true"><span>{featured.data.coverText}</span></div>
+          <div>
+            <div class="post-meta"><span class="tag">{featured.data.tag}</span><span>{featured.data.minutes} min de lectura</span></div>
+            <h2 class="h2">{featured.data.title}</h2>
+            <p>{featured.data.excerpt}</p>
+            <span class="arrow-link">Leer artículo<Icon name="arrow" /></span>
+          </div>
+        </a>
+      )}
+      {rest.length > 0 && (
+        <div class="post-list" data-stagger>
+          {rest.map((post) => <PostRow post={post} />)}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <CtaBand title="¿Tienes una pregunta sobre tu negocio?" text="Escríbenos. Si la respuesta le sirve a más gente, quizá se convierta en el próximo artículo." />
+</Base>

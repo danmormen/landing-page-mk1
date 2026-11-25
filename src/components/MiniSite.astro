@@ -1,0 +1,75 @@
+---
+// Mini sitios de ejemplo (conceptos) que se muestran en la vitrina, servicios y portafolio.
+// Se dibujan con HTML/CSS (sin imágenes) en un lienzo de 1000×625.
+import Icon from './Icon.astro';
+import type { Project } from '../data/projects';
+
+interface Props { site: Project['key']; [attr: string]: unknown }
+const { site, ...attrs } = Astro.props;
+---
+{site === 'cafe' && (
+  <div class="ms cafe" {...attrs}>
+    <div class="ms-nav"><b>Café El Portal</b><span>Menú · Ubicación · Pedidos</span></div>
+    <div class="ms-grid">
+      <div><p class="ms-h">Café de altura, tostado aquí mismo.</p><p class="ms-p">Pide para llevar desde tu celular y pasa por él sin hacer fila.</p><span class="ms-btn">Ver el menú</span></div>
+      <div class="cafe-menu"><div><span>Americano</span><span>Q18</span></div><div><span>Capuchino</span><span>Q24</span></div><div><span>Pan de banano</span><span>Q15</span></div><div><span>Desayuno chapín</span><span>Q45</span></div></div>
+    </div>
+  </div>
+)}
+{site === 'ferre' && (
+  <div class="ms ferre" {...attrs}>
+    <div class="ms-nav"><b>Ferretería Don Beto</b><span>Productos · Cotizar · Envíos</span></div>
+    <div class="ms-grid">
+      <div><p class="ms-h">Todo para tu obra, con entrega a domicilio.</p><p class="ms-p">Busca lo que necesitas y pide tu cotización por WhatsApp.</p><div class="ferre-search"><Icon name="search" />Busca cemento, tubería, pintura…</div></div>
+      <div class="ferre-cats"><div>Construcción<span>Ver</span></div><div>Plomería<span>Ver</span></div><div>Electricidad<span>Ver</span></div><div>Pintura<span>Ver</span></div></div>
+    </div>
+  </div>
+)}
+{site === 'dental' && (
+  <div class="ms dental" {...attrs}>
+    <div class="ms-nav"><b>Clínica Sonríe</b><span>Tratamientos · Equipo · Citas</span></div>
+    <div class="ms-grid">
+      <div><p class="ms-h">Agenda tu cita en un minuto.</p><p class="ms-p">Elige día y hora disponibles. Te confirmamos por WhatsApp.</p><span class="ms-btn">Agendar cita</span></div>
+      <div class="slots"><b>Limpieza dental</b>
+        <div class="days"><span>Lun<br />12</span><span class="on">Mar<br />13</span><span>Mié<br />14</span><span>Jue<br />15</span></div>
+        <div class="times"><span class="off">8:00</span><span>9:30</span><span class="on">11:00</span><span>14:00</span><span class="off">15:30</span><span>17:00</span></div>
+      </div>
+    </div>
+  </div>
+)}
+{site === 'inv' && (
+  <div class="ms sys" {...attrs}>
+    <div class="sys-side"><b>Don Beto · Admin</b><span>Pedidos</span><span class="on">Inventario</span><span>Clientes</span><span>Reportes</span></div>
+    <div class="sys-main"><p class="sys-title">Inventario</p>
+      <table>
+        <thead><tr><th>Producto</th><th class="opt">Categoría</th><th>Existencia</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr><td>Cemento 42.5 kg</td><td class="opt">Construcción</td><td>86 sacos</td><td><span class="pill p-ok">Suficiente</span></td></tr>
+          <tr><td>Tubo PVC 1/2"</td><td class="opt">Plomería</td><td>12 unidades</td><td><span class="pill p-low">Pedir pronto</span></td></tr>
+          <tr><td>Pintura blanca galón</td><td class="opt">Pintura</td><td>34 galones</td><td><span class="pill p-ok">Suficiente</span></td></tr>
+          <tr><td>Cable THHN #12</td><td class="opt">Electricidad</td><td>3 rollos</td><td><span class="pill p-low">Pedir pronto</span></td></tr>
+          <tr><td>Clavos 2½" (libra)</td><td class="opt">Construcción</td><td>40 libras</td><td><span class="pill p-ok">Suficiente</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+)}
+{site === 'espiga' && (
+  <div class="ms espiga" {...attrs}>
+    <div class="ms-nav"><b>Panadería La Espiga</b><span>Pasteles · Pan del día · Pedidos</span></div>
+    <div class="ms-grid">
+      <div><p class="ms-h">Tu pastel, listo a la hora que lo necesitas.</p><p class="ms-p">Elige sabor y tamaño, aparta tu pedido y recógelo sin esperar.</p><span class="ms-btn">Hacer un pedido</span></div>
+      <div class="espiga-form"><label>Sabor<span>Tres leches</span></label><label>Tamaño<span>Mediano · 15 porciones</span></label><label>Entrega<span>Sábado 17 · 10:00</span></label></div>
+    </div>
+  </div>
+)}
+{site === 'taller' && (
+  <div class="ms taller" {...attrs}>
+    <p class="sys-title">Órdenes de servicio · Taller Hermanos Ruiz</p>
+    <div class="kanban">
+      <div class="col"><b>Recibido</b><div class="card"><b>Toyota Hilux</b><small>Cambio de frenos · P-123ABC</small></div><div class="card"><b>Mazda 3</b><small>Revisión general</small></div></div>
+      <div class="col"><b>En reparación</b><div class="card"><b>Nissan Sentra</b><small>Suspensión delantera</small></div><div class="card"><b>Honda CR-V</b><small>Cambio de aceite y filtros</small></div></div>
+      <div class="col"><b>Listo</b><div class="card"><b>Kia Rio</b><small>Avisado por WhatsApp</small></div></div>
+    </div>
+  </div>
+)}
